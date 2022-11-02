@@ -1,0 +1,84 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 3}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{exo}{\ \\}
+
+\end{exo}
+
+
+\begin{exo}{\ \\}
+
+\end{exo}
+
+
+\newpage
+\begin{exo}{\ \\}
+
+\textbf{(a)}
+We start from Top to Bottom, we assign 1 to the root, and follow these two startegies  to assign the levels below until we reach the leaves:\\
+
+If the parent is $\lor$:
+\begin{itemize}
+    \item First child: $0$
+    \item Second child: Parent Value
+\end{itemize}
+
+If the parent is $\land$:
+\begin{itemize}
+    \item First child: $1$
+    \item Second child: Parent Value
+\end{itemize}
+
+\textbf{(b)} The following figures captures the algorithm:
+ 
+\begin{figure}[ht]
+    \centering
+    \incfig{graph-incscape}
+    \caption{graph-incscape}
+    \label{fig:graph-incscape}
+\end{figure}
+
+
+\end{exo}
+
+\begin{exo}{\ \\}
+
+\end{exo}
+
+
+
+\end{document}
+
