@@ -36,10 +36,33 @@ Winter term 2022/2023, Exercise Sheet No. 3}
 
 \begin{exo}{\ \\}
 
+\noindent
+\textbf{(a)} Comparisons between 15 and 8:
+\begin{itemize}
+    \item Pivot is 7: Decision will be postponed.
+    \item Pivot is 15: They will be compared.
+    \item Pivot is 10: They will be imediately seperated and hence never be compared.
+\end{itemize}
+   
+\noindent
+\textbf{(b)} The probability of 8 and 15 being compared:
+
+$\frac{2}{|\{\text{Numbers in the input between $8$ and $15$}\}|} = \frac{2}{|\{8,11,19,10,15,18\}|} = \frac{2}{6} = \frac{1}{3}    $
+
+
 \end{exo}
 
 
 \begin{exo}{\ \\}
+\noindent
+\textbf{(a)}
+
+\noindent
+\textbf{(b)}
+
+
+\noindent
+\textbf{(c)}
 
 \end{exo}
 
@@ -82,7 +105,7 @@ We have for $i,j \in \{1, \dots, n\}\colon$ \[ \min_{i} M_{i,j} \leq M_{i,j} \le
 
 Hence, for $i \in \{1, \dots, n\}\colon$ \[ \max_{j} \min_{i} M_{i,j} \le \max_{j} M_{i,j} \text{ (The RHS is independent of $j$)} \]
 
-Finally, we get: \[ \max_{j} \min_{i} M_{i,j} \le  \min_{i} \max_{j} M_{i,j}  \]
+Notice that the LHS is a constant (independent of both $i$ and $j$), and the past inequality is verified $\forall i$. We finally get: \[ \max_{j} \min_{i} M_{i,j} \le  \min_{i} \max_{j} M_{i,j}  \]
 
 
 \end{document}
