@@ -45,7 +45,7 @@ Winter term 2022/2023, Exercise Sheet No. 3}
 \end{itemize}
    
 \noindent
-\textbf{(b)} The probability of 8 and 15 being compared:
+\textbf{(b)} The probability of 8 and 15 being compared, is the probability that the first pivot to be selected from the set \{Numbers in the input between 8 and 15\} is either 8 or 15:
 
 $\frac{2}{|\{\text{Numbers in the input between $8$ and $15$}\}|} = \frac{2}{|\{8,11,19,10,15\}|} = \frac{2}{5}  $
 
@@ -54,15 +54,40 @@ $\frac{2}{|\{\text{Numbers in the input between $8$ and $15$}\}|} = \frac{2}{|\{
 
 
 \begin{exo}{\ \\}
+
+We assume for questions (a) and (b) that $\frac{1}{2}+\frac{1}{\sqrt{n}} < 1$, which yields that $n > 4$.   \\
 \noindent
 \textbf{(a)}
 Based on the lecture notes, for a letter $x$ of size $n$, we would have: $ \P[\{ \text{{$A_t$ failing}} \}] \leq (1-\frac{4}{n})^{\frac{t}{2}} $ \\
 
 
 \noindent
-\textbf{(b)}  Hey, well well well \\
+\textbf{(b)} Let's say we run $\mathcal{A}$, $2n^k$ times, for a positive integer $k$. The probablity of $\mathcal{A}_{2n^k}$ failing is:
 
-\noindent
+
+\begin{align*}
+    \P[\text{\{$\mathcal{A}_{2n^k}$ failing\}}] &\leq (1-\frac{4}{n})^{n^k} \\
+    &\leq e^{-(1-\frac{4}{n})n^k}   \text{\quad \quad (using the hint)} \\
+    &= e^{4n^{k-1} - n^k} \\
+    &\leq e^{-2n^k}  \text{\quad \quad (since $4n^{k-1} \leq n^k$)} \\
+\end{align*}
+ 
+For $k$ sufficiently large, the RHS is guarenteed to converge to 0, and hence $\forall \epsilon$ there exists $k$ s.t: the RHS is less than $1/2 - \epsilon$ \\
+
+For $1/2 >\epsilon > 0$
+
+\begin{align*}
+    & e^{-2n^k} \leq \frac{1}{2} - \epsilon \\
+    &\implies -2n^k \leq \ln(1/2 - \epsilon) \\
+    &\implies n^k \geq -\ln(1/2 - \epsilon)/2 \\
+    &\implies k \ln(n) \geq  \ln(-\ln(1/2 - \epsilon)/2) = \alpha \\
+    &\implies k \geq \frac{\alpha}{\ln(n)} 
+\end{align*}
+
+Therefore, any positive $k$ verifying the past inequality would work. As $\mathcal{A}_{2n^k}$ still runs in polynomial time ($2n^k T(n)$), $L \in BPP$  \\ 
+
+
+  \noindent
 \textbf{(c)}
 The probability of $\mathcal{A}$ failing for an input of size $n$ is the same of the probability of failing in the first case (when the probability is at least $\frac{1}{2}+\frac{1}{\sqrt{n}})$ for an input size of $n^2$. Hence, using \textbf{(b)}, $L \in BPP$.
 
