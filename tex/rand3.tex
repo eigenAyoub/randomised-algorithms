@@ -69,7 +69,6 @@ Based on the lecture notes, for a letter $x$ of size $n$, we would have: $ \P[\{
     \P[\text{\{$\mathcal{A}_{2n^k}$ failing\}}] &\leq (1-\frac{4}{n})^{n^k} \\
     &\leq e^{-(1-\frac{4}{n})n^k}   \text{\quad \quad (using the hint)} \\
     &= e^{4n^{k-1} - n^k} \\
-    &\leq e^{-2n^k}  \text{\quad \quad (since $4n^{k-1} \leq n^k$)} \\
 \end{align*}
  
 For $k$ sufficiently large, the RHS is guarenteed to converge to 0, and hence $\forall \epsilon$ there exists $k$ s.t: the RHS is less than $1/2 - \epsilon$ \\
@@ -77,14 +76,14 @@ For $k$ sufficiently large, the RHS is guarenteed to converge to 0, and hence $\
 For $1/2 >\epsilon > 0$
 
 \begin{align*}
-    & e^{-2n^k} \leq \frac{1}{2} - \epsilon \\
-    &\implies -2n^k \leq \ln(1/2 - \epsilon) \\
-    &\implies n^k \geq -\ln(1/2 - \epsilon)/2 \\
-    &\implies k \ln(n) \geq  \ln(-\ln(1/2 - \epsilon)/2) = \alpha \\
-    &\implies k \geq \frac{\alpha}{\ln(n)} 
+    & e^{-(1-4/n)n^k} \leq \frac{1}{2} - \epsilon \\
+    &\implies -(1-4/n)n^k \leq \ln(1/2 - \epsilon) \\
+    &\implies n^k \geq \frac{\ln(1/2 - \epsilon)}{-(1-4/n)} = \alpha(n) \\
+    &\implies k \ln(n) \geq \ln(\alpha(n)) \\
+    &\implies k \geq \frac{\ln(\alpha(n))}{\ln(n)} 
 \end{align*}
 
-Therefore, any positive $k$ verifying the past inequality would work. As $\mathcal{A}_{2n^k}$ still runs in polynomial time ($2n^k T(n)$), $L \in BPP$  \\ 
+Therefore, any positive $k$ verifying the past inequality would work. As $\mathcal{A}_{2n^k}$ still runs in polynomial time ($2n^k T(n)$), $L \in BPP$.  \\ 
 
 
   \noindent
