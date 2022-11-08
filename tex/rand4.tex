@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 4}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{exo}{\ \\}
+
+\noindent
+\textbf{(a)} Hey \\
+
+
+\noindent
+\textbf{(b)} Hey \\
+
+
+\end{exo}
+
+\begin{exo}{\ \\}
+
+Let $C = \{x_1, \dots, x_N\}$ be a random cut of the graph, we are obviously interested in $\E[N]$, i.e., the expected number of edges in a cut.
+
+Let $E = \{e_1, \dots, e_{|E|}\}$ and let the RV $X_i$ be the indicator of edge $e_i$ in $C$.
+
+
+Clearly $N = \sum_{i}^{|E|} X_i$, and hence, $\E{N}= \sum_i^{|E|} \E X_i$
+
+Now we prove that $\E (X_i) = 1/2$ 
+\end{exo}
+
+
+
+\end{document}
+
