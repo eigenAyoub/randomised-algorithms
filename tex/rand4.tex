@@ -48,14 +48,28 @@ Winter term 2022/2023, Exercise Sheet No. 4}
 
 \begin{exo}{\ \\}
 
-Let $C = \{x_1, \dots, x_N\}$ be a random cut of the graph, we are obviously interested in $\E[N]$, i.e., the expected number of edges in a cut.
-
-Let $E = \{e_1, \dots, e_{|E|}\}$ and let the RV $X_i$ be the indicator of edge $e_i$ in $C$.
+Let $C = \{x_1, \dots, x_N\}$ be a random cut of the graph, where $\{x_i\}_{1\leq i \leq N}$ representes the edges. We are obviously interested in $\E[N]$, i.e., the expected number of edges in a cut. Let $E = \{e_1, \dots, e_{|E|}\}$ and let the RV $X_i$ be the indicator of edge $e_i$ in $C$.
 
 
-Clearly $N = \sum_{i}^{|E|} X_i$, and hence, $\E{N}= \sum_i^{|E|} \E X_i$
+Clearly $\displaystyle N = \sum_{i=1}^{|E|}X_i$, and hence, $\displaystyle \E[N]= \sum_i^{|E|} \E[X_i]$
 
-Now we prove that $\E (X_i) = 1/2$ 
+Now we prove that $\E (X_i) = 1/2$. Suppose the edge $e_i$ connects the vertices $A$ and $B$. 
+
+\begin{align*}
+    \E[X_i] &= \P[X_i=1] \\
+            &= \P[\{\text{A random cut contains $e_i$}\}] \\
+            &= \P[\{\text{A cut contains one and only one of $A$ or $B$  }\}] \\
+\end{align*}
+
+Each cut is defined by a split of vertices $S_1 / S_2$, where $S_1$ selects $j \in \{1, \dots, |V|-1\}$ vertices at random from $V$. Each vertex has 1/2 probability to be in $S_1$ (resp. $S_2$). 
+\begin{align*}
+    \P[\{ (A,B)\in (S_1, S_2) \lor (A,B)\in (S_2, S_1)\}] &= \P[\{ (A,B)\in (S_1, S_2)\}] + \P[\{(A,B)\in (S_2, S_1)\}] \\
+                                                          &= \P[\{ A \in S_1 \land B \in S_2 \}] + \P[\{  A \in S_1 \land B \in S_1\}] \\
+                                                          &= \P[\{ A \in S_1\}]\P[\{ B \in S_2 \}] + \P[\{A \in S_1\}] \P[\{B \in S_1\}] \\
+                                                          &= 1/2 1/2 + 1/2 1/2 = 1/2
+\end{align*}
+
+
 \end{exo}
 
 
