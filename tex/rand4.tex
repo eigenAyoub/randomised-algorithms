@@ -37,14 +37,32 @@ Winter term 2022/2023, Exercise Sheet No. 4}
 \begin{exo}{\ \\}
 
 \noindent
-\textbf{(a)} Hey \\
-
+\textbf{(a)} Every deterministic algorithm has a predefined list of $S$ that it checks in the same order, hence is $s^*$ was the last item in the algorithm's list, it would be forced to try all words in $S$. To know this input we can try a naive approach, try all words of $S$ as input, and collect the time it took the algorithm to break the lock, the input we are looking for would take the longest time.  \\
 
 \noindent
-\textbf{(b)} Hey \\
+\textbf{(b)} For $|S|=1$ there is only one input and hence, $\P[T=1] = 1 = 1/|S|$. Let's suppose that for some set $S^{'}$ of size $n \geq 1$ we have $\P[T=k] = \frac{1}{|S^{'}|}$ for all $1 \leq k \leq n$. 
 
+Let $S$ be a set of size $n+1$, we have the following for some $k \in \{1, \dots ,n+1\}\colon$
 
+\begin{align*}
+    \P[T = k] &= \P[T=k |T \leq n ]\P[T \leq n] +  \P[T=k |T = n+1 ]\P[T = n+1]
+\end{align*}
+ 
+For $k \leq n$: \\
+$\P[T=k | T \leq n] = \frac{1}{n}$ (using the hypothesis, knowing that $T \leq n$, gives us one less choice and puts us back to the hypothesis $n$), and $\P[T=k |T = n+1 ] = 0$, which yields, $\P[T = k] &= \frac{1}{n} \P[T \leq n] = \frac{1}{n} \frac{n}{n+1} = \frac{1}{n+1}   $
+
+For $k = n+1$: \\
+$\P[T=k] = \P[T=k|T=n+1] \P[T=n+1] = 1 \frac{1}{n+1} = \frac{1}{n+1} $
 \end{exo}
+
+Hence, for all $k \in \{1, \dots, n+1\}\colon \P[T=k] = \frac{1}{n+1}$m which completes our induction proof.
+
+For $|S| = n$, we have:
+\begin{align*}
+    \E[T] &= \sum_{k=1}^{n} k \P[T=k] \\
+          &= \frac{1}{n} \frac{n(n+1)}{2} \\
+          &= \frac{n+1}{2} 
+\end{align*}
 
 \begin{exo}{\ \\}
 
