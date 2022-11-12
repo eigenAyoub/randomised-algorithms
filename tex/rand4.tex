@@ -49,20 +49,42 @@ Let $S$ be a set of size $n+1$, we have the following for some $k \in \{1, \dots
 \end{align*}
  
 For $k \leq n$: \\
-$\P[T=k | T \leq n] = \frac{1}{n}$ (using the hypothesis, knowing that $T \leq n$, gives us one less choice and puts us back to the hypothesis $n$), and $\P[T=k |T = n+1 ] = 0$, which yields, $\P[T = k] &= \frac{1}{n} \P[T \leq n] = \frac{1}{n} \frac{n}{n+1} = \frac{1}{n+1}   $
+$\P[T=k | T \leq n] = \frac{1}{n}$ (using the hypothesis, knowing that $T \leq n$, gives us one less choice and puts us back to the hypothesis $n$), and $\P[T=k |T = n+1 ] = 0$, which yields, $\P[T = k] = \frac{1}{n} \P[T \leq n] = \frac{1}{n} \frac{n}{n+1} = \frac{1}{n+1}   $
 
 For $k = n+1$: \\
 $\P[T=k] = \P[T=k|T=n+1] \P[T=n+1] = 1 \frac{1}{n+1} = \frac{1}{n+1} $
 \end{exo}
 
-Hence, for all $k \in \{1, \dots, n+1\}\colon \P[T=k] = \frac{1}{n+1}$m which completes our induction proof.
+Hence, for all $k \in \{1, \dots, n+1\}\colon \P[T=k] = \frac{1}{n+1}$ which completes our induction. \\
 
-For $|S| = n$, we have:
+\noindent
+For $|S| = n$, let's compute $\E[T]$:
 \begin{align*}
     \E[T] &= \sum_{k=1}^{n} k \P[T=k] \\
           &= \frac{1}{n} \frac{n(n+1)}{2} \\
           &= \frac{n+1}{2} 
 \end{align*}
+
+
+\noindent
+
+\textbf{(c)} The hardest distribution $p$ is a uniform one, otherwise (if $p$ favoured some combinations), then there are always some deterministic algorithms that would check for those combinations first, and hence make the expected numbers of checks smaller in average. \\
+
+Let $p$ be the uniform distribution over words of $S$, let $A$ be any optimal determinitic algorithm, hence, for each $k \in \{1, \dots, |S|\}$, there is one and only one input $I_j$ such that $k = C(I_j, A)$, this observation justifies the equality \textbf{[*]} below.
+
+\begin{align*}
+    \E[C(I_p, A)] &= \sum_{}^{} C(I_k, A) \P[I_k] \\
+                  &= \frac{1}{|S|} \sum k  \textbf{\quad \quad [*]}\\
+                  &= \frac{|S|+1}{2} \\
+\end{align*}
+
+
+Now let $q$ be a probability distribution over the set of deterministic algorithms $\mathcal{A}$ , using Yao's minmax theorem we get:
+\begin{align*}
+   \frac{|S|+1}{2}  \leq  \max_{I \in S} \E[C(I, A_q)]
+\end{align*}
+
+From the last inequality, we can conclude that no randomized algorithm can do better in average that $\frac{|S|+1}{2}$,(there is always an input that has higher cost than that), and hence the the algorithm in \textbf{(b)} is optimal.
 
 \begin{exo}{\ \\}
 
