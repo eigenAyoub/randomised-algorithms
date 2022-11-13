@@ -88,7 +88,7 @@ From the last inequality, we can conclude that no randomized algorithm can do be
 
 \begin{exo}{\ \\}
 
-Let $C = \{x_1, \dots, x_N\}$ be a random cut of the graph, where $\{x_i\}_{1\leq i \leq N}$ representes the edges. We are obviously interested in $\E[N]$, i.e., the expected number of edges in a cut. Let $E = \{e_1, \dots, e_{|E|}\}$ and let the RV $X_i$ be the indicator of edge $e_i$ in $C$.
+Let $C = \{x_1, \dots, x_N\}$ be a random cut of the graph, where $\{x_i\}_{1\leq i \leq N}$ representes the edges. We are obviously interested in $\E[N]$, i.e., the expected number of edges in a cut. Let $E = \{e_1, \dots, e_{|E|}\}$ and let the RV $X_i$ be the indicator of edge $e_i$ in $C$, i.e., $X_i = \delta(e_i \in C)$.
 
 
 Clearly $\displaystyle N = \sum_{i=1}^{|E|}X_i$, and hence, $\displaystyle \E[N]= \sum_i^{|E|} \E[X_i]$
@@ -103,16 +103,52 @@ Now we prove that $\E (X_i) = 1/2$. Suppose the edge $e_i$ connects the vertices
 
 Each cut is defined by a split of vertices $S_1 / S_2$, where $S_1$ selects $j \in \{1, \dots, |V|-1\}$ vertices at random from $V$. Each vertex has 1/2 probability to be in $S_1$ (resp. $S_2$). 
 \begin{align*}
-    \P[\{ (A,B)\in (S_1, S_2) \lor (A,B)\in (S_2, S_1)\}] &= \P[\{ (A,B)\in (S_1, S_2)\}] + \P[\{(A,B)\in (S_2, S_1)\}] \\
-                                                          &= \P[\{ A \in S_1 \land B \in S_2 \}] + \P[\{  A \in S_1 \land B \in S_1\}] \\
-                                                          &= \P[\{ A \in S_1\}]\P[\{ B \in S_2 \}] + \P[\{A \in S_1\}] \P[\{B \in S_1\}] \\
-                                                          &= 1/2 1/2 + 1/2 1/2 = 1/2
+    \E[X_i] &= \P[\{ (A,B)\in (S_1, S_2) \lor (A,B)\in (S_2, S_1)\}]  \\
+            &= \P[\{ (A,B)\in (S_1, S_2)\}] + \P[\{(A,B)\in (S_2, S_1)\}] \\
+            &= \P[\{ A \in S_1 \land B \in S_2 \}] + \P[\{  A \in S_1 \land B \in S_1\}] \\
+            &= \P[\{ A \in S_1\}]\P[\{ B \in S_2 \}] + \P[\{A \in S_1\}] \P[\{B \in S_1\}] \\
+            &=  \frac{1}{2} \frac{1}{2}+  \frac{1}{2} \frac{1}{2}  =  \frac{1}{2}
 \end{align*}
 
+Now we have: $\E[N] = \sum_i \E[X_i] = \frac{|E|}{2} \geq \frac{|E|}{2}$. Hence, there must be a cut that has at least $\frac{|E|}{2}$ edges.
 
 \end{exo}
 
+\begin{exo}{\ \\}
+    
+\noindent
+\textbf{(a)} The probability that ModeratelyFastCut outputs a given minimum cut, as a function of $t$ and $n$, is the same as the algorithm not cutting any edge from the minimum cut, which is, according to the notes: $\frac{t(t-1)}{n(n-1)} $
+ 
+You should multiply it with the probability that the deterministic algorithm outputs...
 
+\noindent
+\textbf{(b)}  The running time: $M(t,n) = (n-t) \mathcal{O}(n) + \mathcal{O}(t^3)$ \\
+
+\noindent
+\textbf{(c)} If we run the algorithm $N$ times, the running time would be: $T_{Amp}(t,n,N) = N \mathcal{O}((t^3-nt+n^2)$ \\
+
+To make it effictient, each run has to be efficient first, we find $t$ that minimizes the polynomial $P(t) = t^3 -nt + n^2$ given the constraints on $t$. A quick derivation would give the value $\sqrt{\frac{n}{3}}$, assuming $n$ is large enough ($n \geq 12$). The new runtime: would be $T(n, N) = N \mathcal{O}(n^2)$ \\
+
+And we would  get the following upper bound:
+
+\begin{align*}
+    \P[\text{\{Error\}}] &\leq \left(1 - \frac{t(t-1)}{n(n-1)}\right)^N \\
+                                                    &\leq e^{-\frac{t(t-1)N}{n(n-1)} } \\
+                                                   \text{(for $t = \sqrt{\frac{n}{3}}$) \quad \quad  \quad \quad} &= e^{\left(-\frac{(\sqrt{n}-\sqrt{3})N}{3\sqrt{n}(n-1)} \right)} \\
+                                                                                                                  &\leq e^{-\frac{N}{\sqrt{n}(\sqrt{n}-\sqrt{3})} } \\
+                                                                                                                  &\leq e^{-\frac{N}{n} }
+\end{align*}
+
+\noindent
+\textbf{(d)}  We have the following results:
+\begin{itemize}
+    \item For Fast cut: $\mathcal{O}(n^2 \log^2(n))$ 
+    \item For Randomized Contraction: $\Theta(n^4)$
+    \item ModeratelyFastCut: for $t = \sqrt{n} \colon$ we would need $\mathcal{O}(n)$ repititions to guarentee a constant error (using the upper bound we derived in the past equation), plus, each run would take $\mathcal{O}(n^2)$, which yields the following: $\mathcal{O}(n^3)$
+\end{itemize}
+
+
+\end{exo}
 
 \end{document}
 
