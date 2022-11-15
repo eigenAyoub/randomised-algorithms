@@ -1,11 +1,14 @@
 # randomised-algorithms
 
 
-This repo will mainly contain my attempts to solve the homeworks of the course **Randomised algorithms**, that I'm undertaken at the **university of PASSAU**.
+This repo will mainly contain my attempts to solve the homeworks of the course **Randomised Algorithms**, that I'm undertaken at the **university of PASSAU**.
 
 As we always get some feedback from the Professor, I'll try to add below points that I have missed, or questions that I got completely wrong:
 
+### Homework 4:
+**Mark: 17/20**
 
+I missed a few points, mostly by being "sloppy" and rushing my conclusions, I should've been more precise.
 ### Homework 3:
 **Mark: 20/20**
 

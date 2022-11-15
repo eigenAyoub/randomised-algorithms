@@ -1,0 +1,133 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 5}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+
+\maketitle
+
+%exo1
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)} We have established  in the notes that the probability of not making any mistakes after $n-t$ contractions is at least $\frac{t(t-1)}{n(n-1)}$, in this case, when $t = n-1$, we would get that this probability is $\frac{n-2}{n} = 1 - \frac{2}{n} $, which is in fact equal to $q_n$. \\
+
+\noindent
+\textbf{(b)} We denote the probability that $S_1$ (resp $S_2$) is correct as $P_1$ (resp. $P_2$), we have: 
+\begin{align*}
+P_1 &= \P[\text{\{Output of L5 is correct\}}|\text{\{Contraction at L4 is correct\}}]\P[\text{\{Contraction at L4 is correct\}}] \\
+    &= P(n-1) q_n \\
+P_2 &= P(n)
+\end{align*}
+
+The algorithm is succesful if either the return at line 7 was a succes (i.e., $S_1$ is a success) or  the return at line 10 was a succes, which yiled the following: 
+
+\begin{align*}
+    p(n) &= \P[\text{\{Entered L7\}}]\P[\text{\{Succes\}}|\text{\{entered L7\}}]
+    + \P[\text{\{Didn't Enter L7\}}]\P[\text{\{Succes\}}|\text{\{Didnt enter L7\}}] \\
+         &= q_n \P[\text{\{Succes\}}|\text{\{entered L7\}}]
+    + (1-q_n)\P[\text{\{Succes\}}|\text{\{Didnt enter L7\}}] \\
+         &= q_n \P[\text{\{$S_1$ is succesful\}}]
+    + (1-q_n)\P[\text{\{The best of $S_1$, $S_2$ was succesful\}}] \\
+         &= q_n \P[\text{\{$S_1$ is succesful\}}]
+    + (1-q_n)(1 - \P[\text{\{$S_1$ and $S_2$ failed\}}]) \\
+         &= q_n P_1 + (1-q_n)[1- (1-P_1)(1-P_2)]  \quad \quad \text{(We will just keep re-arranging after now)} \\
+         &= q_n^2 P(n-1) + (1-q_n)[1 - (1-q_nP(n-1))(1-P(n))] \\
+         &= q_n^2 P(n-1) + (1-q_n)[P(n) + q_nP(n-1) - q_nP(n-1)P(n)] \\ 
+         &= q_nP(n-1) + (1-q_n)P(n) - q_n(1-q_n)P(n-1)P(n) \\ 
+    \implies & \\
+         q_nP(n)&= q_nP(n-1) - q_n(1-q_n)P(n-1)P(n) \\ 
+    \implies & \\
+         P(n) &= P(n-1) - (1-q_n)P(n-1)P(n) \quad \quad (q_n \neq 0 \text{ since $n\neq 2$ as we would verify line 1 if $n=2$} )
+\end{align*}
+
+\noindent
+\textbf{(c)} By dividing the equation that we derived in the last question by $P(n)P(n-1)$, we get the following, for $k \in \{3, \dots, n\}$:
+
+\begin{align*}
+    \frac{1}{P(k-1)} - \frac{1}{P(k)}  &= - \frac{2}{k}  \\
+    \implies & \\
+    \sum_{k=3}^{n} \frac{1}{P(k-1)} - \sum_{k=3}^{n} \frac{1}{P(k)}  &=
+    - \sum_{k=3}^{n} \frac{2}{k}  \\
+    \frac{1}{P(2)} - \frac{1}{P(n)}  &= -\sum_{k=3}^{n} \frac{2}{k}  \\
+    \implies &\\
+    P(n) = \frac{1}{\sum_{k=3}^{n} \frac{2}{k} -1} 
+\end{align*}
+
+Comparisons of the probability of succes with FastCut:
+
+\begin{itemize} 
+    \item GeoContraction has a $\Theta(\frac{1}{\log(n)})$ (Assuming the bouds are exact like suggested in \textbf{(b)} )
+    \item FastCut had a $\Omega(\frac{1}{\log(n)})$ 
+\end{itemize}
+
+
+\end{exo}
+
+%exo2
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)}
+
+\noindent
+\textbf{(b)} 
+
+\noindent
+\textbf{(c)}  
+\end{exo}
+
+%exo3
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)}
+
+\noindent
+\textbf{(b)} 
+
+\end{exo}
+
+
+%exo4
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)}
+
+\noindent
+\textbf{(b)} 
+
+\noindent
+\textbf{(c)}  
+
+\noindent
+\textbf{(d)} 
+\end{exo}
+
+
+\end{document}
+
