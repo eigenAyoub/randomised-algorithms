@@ -83,7 +83,7 @@ The algorithm is succesful if either the return at line 7 was a succes (i.e., $S
 Comparisons of the probability of succes with FastCut:
 
 \begin{itemize} 
-    \item GeoContraction has a $\Theta(\frac{1}{\log(n)})$ (Assuming the bouds are exact like suggested in \textbf{(b)} )
+    \item GeoContraction has a $\Theta(\frac{1}{\log(n)})$ (Assuming the bounds are exact like suggested in \textbf{(b)} )
     \item FastCut had a $\Omega(\frac{1}{\log(n)})$ 
 \end{itemize}
 
@@ -92,14 +92,38 @@ Comparisons of the probability of succes with FastCut:
 
 %exo2
 \begin{exo}{\ \\}
-\noindent
-\textbf{(a)}
 
-\noindent
-\textbf{(b)} 
+Let $X_t$ represent the number of walks that are left to reach home at step $t$. Obviously $X_t \in \{0, \dots, n\}$, and we are interested in computing $\E[T]$ where $T = \inf\{t \geq 0 | X_t = 0 \}$. \\
 
-\noindent
-\textbf{(c)}  
+We have the following:
+
+\begin{align*}
+    \E[X_t - X_{t+1}| X_t=s]  
+    &= \sum_{X_t, X_{t+1}} \P[(X_t, X_{t+1})|X_t=s](X_t-X_{t+1}) \\
+    &= \sum_{X_{t+1}} \P[(s,X_{t+1})|X_t=s](s-X_{t+1})
+\end{align*}
+
+If $s=n$ (we are at the bar), $X_{t+1}$ has two options $\{n, n-1\}$
+\begin{align*}
+    \E[X_t-X_{t+1} | X_t = s] &= (n - (n-1))\P[(n, n-1)] \\
+                               &= \frac{1}{5}
+\end{align*}
+
+
+If $0<s<n$, $X_{t+1}$ has two options $\{s-1, s+1\}$
+
+\begin{align*}
+    \E[X_t-X_{t+1} | X_t = s] 
+    &= (s - (s-1))\P[(s, s-1)] + (s-(s+1))\P[(s, s+1)] \\
+    &= \frac{3}{5} + \frac{2}{5} \\
+    &= 1
+\end{align*}
+
+Hence, we get, for all $t>0, s \neq n$:
+\[ \frac{1}{5} \leq \E[X_t-X_{t+1} | X_t = s]  \leq 1 \]
+
+Which yields the following bounds, assuming $X_0 = n$:
+\[ n \leq \E[T] \leq 5n \]
 \end{exo}
 
 %exo3
