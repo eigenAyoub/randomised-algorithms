@@ -119,7 +119,7 @@ If $0<s<n$, $X_{t+1}$ has two options $\{s-1, s+1\}$
     &= 1
 \end{align*}
 
-Hence, we get, for all $t>0, s \neq n$:
+Hence, we get, for all $t>0, s \neq 0$:
 \[ \frac{1}{5} \leq \E[X_t-X_{t+1} | X_t = s]  \leq 1 \]
 
 Which yields the following bounds, assuming $X_0 = n$:
@@ -129,10 +129,43 @@ Which yields the following bounds, assuming $X_0 = n$:
 %exo3
 \begin{exo}{\ \\}
 \noindent
-\textbf{(a)}
+\textbf{(a)} As the state $0$ is never reacheable and $X_0 = 1$, $T$ could be formulated as follows: \[T = \inf\{t \geq 1 | X_t = -1 \} \] i.e, the first time we reach the state $s = -1$ (our definition of "succcess", speaking from a geometric distribution terminology). By noting that each $X_t$ is a Bernoulli experiment with $p =1/2$, we conclude that $\E[T] = 1/p = 2$. \\
 
 \noindent
-\textbf{(b)} 
+\textbf{(b)} The state we are interested to reach in the definition of $T$ is -1, in the theorem the state of interest is $s = 0$, and $X_t$ only takes positive values in the theorem statement, again, here $X_t$ can take the value $-1$.
+
+We have for $s \neq 0$:
+
+\[ \E[X_t - X_{t+1} | X_t =s] =  s - \E[X_{t+1}|X_t = s] = s \]
+
+And hence, $\E[X_t - X_{t+1}| X_t = s] \leq 1$ for all $s \neq 0$. using the additive drift theorem would lead to conclude that $E[T] \leq 1$, which is completely wrong. \\
+
+\textbf{To make it work}, we define the random process $(Y_t)$ as $Y_t = X_t +1$, clearly $Y_t \in \{0, 1, 2\}$, and 
+\begin{align*}
+    T 
+    &= \inf\{ t \geq 0 | X_t = -1\} \\
+    &= \inf\{ t \geq 0 | X_t+ 1 = 0\} \\
+    &= \inf\{ t \geq 0 | Y_t = 0\} \\ 
+\end{align*}
+
+The way we defined $(Y_t)_{t\geq0}$, and how we formulated $T$ using $(Y_t)$, matches the theorem's assumptions. Moreover we have:
+$[s \neq 0 \land \P(Y_t = s)> 0 \implies s=2]$, and hence we only need to verify the theorem's conditions for $s=2$:
+
+\begin{align*}
+    \E[Y_t - Y_{t+1}| Y_t  = 2] 
+        &= 2 - \E[Y_{t+1}|Y_t = 2] 
+        \quad \quad \text{$Y_{t+1}$ can only move to 0 or 2}\\
+        &= 2 - 2\P[Y_{t+1}=2|Y_t = 2] \\
+        &= 2 - 2 \frac{1}{2} \\ 
+        &= 1
+\end{align*}
+
+And hence, using the additive drift theorem, we get:
+
+\[  \frac{\E[Y_0]}{1} \leq \E[T] \leq \frac{\E[Y_0]}{1} \implies  \E[T] =  2, \text{since $\E[Y_0]=2$} \]
+
+Which is the same as the answer that we got in \textbf{(a)}. 
+
 
 \end{exo}
 
@@ -149,7 +182,26 @@ Which yields the following bounds, assuming $X_0 = n$:
 \textbf{(c)}  
 
 \noindent
-\textbf{(d)} 
+\textbf{(d)} Consider the random process $(X_t)_{t \geq 0}$ on state space $\{0, 1, \dots, n\}$, where knowing that $X_t = s$ for $s>0$, $X_{t+1}$ is defined as follows:
+
+\[   
+X_{t+1} = 
+\begin{cases}
+    s-1 &\text{with probability } \frac{1}{s} \\
+    s   &\text{with probability } 1 - \frac{1}{s}\\
+\end{cases}
+\]
+
+For $s>0$ and $t \geq 1$:
+\begin{align*}
+    \E[X_{t}-X_{t+1}|X_t=s] 
+    &= s - \E[X_{t+1}| X_t=s] \\
+    &= s - [(s-1)\frac{1}{s} + s(1-\frac{1}{s})] \\
+    &= s - [1 - 1/s + s -1] \\
+    &= \frac{1}{s} 
+\end{align*}
+
+
 \end{exo}
 
 
