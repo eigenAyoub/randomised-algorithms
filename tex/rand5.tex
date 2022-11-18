@@ -64,7 +64,7 @@ The algorithm is succesful if either the return at line 7 was a succes (i.e., $S
     \implies & \\
          q_nP(n)&= q_nP(n-1) - q_n(1-q_n)P(n-1)P(n) \\ 
     \implies & \\
-         P(n) &= P(n-1) - (1-q_n)P(n-1)P(n) \quad \quad (q_n \neq 0 \text{ since $n\neq 2$ as we would verify line 1 if $n=2$} )
+         P(n) &= P(n-1) - (1-q_n)P(n-1)P(n) \quad \quad (\text{We would verify line 1 if $n=2$, hence $q_n$ would never equal $0$ } )
 \end{align*}
 
 \noindent
@@ -77,7 +77,7 @@ The algorithm is succesful if either the return at line 7 was a succes (i.e., $S
     - \sum_{k=3}^{n} \frac{2}{k}  \\
     \frac{1}{P(2)} - \frac{1}{P(n)}  &= -\sum_{k=3}^{n} \frac{2}{k}  \\
     \implies &\\
-    P(n) = \frac{1}{\sum_{k=3}^{n} \frac{2}{k} -1} 
+    P(n) = \frac{1}{\sum_{k=3}^{n} \frac{2}{k} + 1} 
 \end{align*}
 
 Comparisons of the probability of succes with FastCut:
@@ -98,23 +98,24 @@ Let $X_t$ represent the number of walks that are left to reach home at step $t$.
 We have the following:
 
 \begin{align*}
-    \E[X_t - X_{t+1}| X_t=s]  
-    &= \sum_{X_t, X_{t+1}} \P[(X_t, X_{t+1})|X_t=s](X_t-X_{t+1}) \\
-    &= \sum_{X_{t+1}} \P[(s,X_{t+1})|X_t=s](s-X_{t+1})
+    \E_{(X_t,X_{t+1})}[X_t - X_{t+1}| X_t=s]  
+    &= \E_{X_{t+1}}[s- X_{t+1}| X_t=s]  \\
+    &= s - \E[X_{t+1}| X_t=s]  \\
+    &= s - \sum_{X_{t+1}} \P[X_{t+1}|X_t=s]X_{t+1}
 \end{align*}
 
 If $s=n$ (we are at the bar), $X_{t+1}$ has two options $\{n, n-1\}$
 \begin{align*}
-    \E[X_t-X_{t+1} | X_t = s] &= (n - (n-1))\P[(n, n-1)] \\
-                               &= \frac{1}{5}
+    \E[X_t-X_{t+1} | X_t = s] 
+    &= n - n\P[X_{t+1}= n|X_t=s] - (n-1)\P[X_{t+1}=n-1|X_t=s] \\
+    &= \frac{1}{5}
 \end{align*}
 
 
 If $0<s<n$, $X_{t+1}$ has two options $\{s-1, s+1\}$
-
 \begin{align*}
     \E[X_t-X_{t+1} | X_t = s] 
-    &= (s - (s-1))\P[(s, s-1)] + (s-(s+1))\P[(s, s+1)] \\
+    &= s - (s-1)\P[X_{t+1}= s-1|X_t=s] - (s+1)\P[X_{t+1}=s+1|X_t=s] \\
     &= \frac{3}{5} + \frac{2}{5} \\
     &= 1
 \end{align*}
@@ -134,11 +135,11 @@ Which yields the following bounds, assuming $X_0 = n$:
 \noindent
 \textbf{(b)} The state we are interested to reach in the definition of $T$ is -1, in the theorem the state of interest is $s = 0$, and $X_t$ only takes positive values in the theorem statement, again, here $X_t$ can take the value $-1$.
 
-We have for $s \neq 0$:
+We have for $s \neq 0$: $\E[X_{t+1}|X_t = s] = 0$, and hence: 
 
 \[ \E[X_t - X_{t+1} | X_t =s] =  s - \E[X_{t+1}|X_t = s] = s \]
 
-And hence, $\E[X_t - X_{t+1}| X_t = s] \leq 1$ for all $s \neq 0$. using the additive drift theorem would lead to conclude that $E[T] \leq 1$, which is completely wrong. \\
+Which yields, $\E[X_t - X_{t+1}| X_t = s] \leq 1$ for all $s \neq 0$. using the additive drift theorem would lead to conclude that $1 \leq E[T]$ \\
 
 \textbf{To make it work}, we define the random process $(Y_t)$ as $Y_t = X_t +1$, clearly $Y_t \in \{0, 1, 2\}$, and 
 \begin{align*}
@@ -154,7 +155,7 @@ $[s \neq 0 \land \P(Y_t = s)> 0 \implies s=2]$, and hence we only need to verify
 \begin{align*}
     \E[Y_t - Y_{t+1}| Y_t  = 2] 
         &= 2 - \E[Y_{t+1}|Y_t = 2] 
-        \quad \quad \text{$Y_{t+1}$ can only move to 0 or 2}\\
+        \quad \quad \text{(($Y_{t+1}$ can only move to 0 or 2)}\\
         &= 2 - 2\P[Y_{t+1}=2|Y_t = 2] \\
         &= 2 - 2 \frac{1}{2} \\ 
         &= 1
@@ -173,13 +174,42 @@ Which is the same as the answer that we got in \textbf{(a)}.
 %exo4
 \begin{exo}{\ \\}
 \noindent
-\textbf{(a)}
+\textbf{(a)} Let's first compute $\E[X_t-X_{t+1}| X_t =s]$ for some $0 <s \leq n$:
+
+\begin{align*}
+    \E[X_t-X_{t+1}| X_t =s] 
+    &= s - \sum_{i = 0}^{s-1} \P[X_{t+1}=i| X_t =s] i \\
+    &= s - \frac{1}{s} \sum_{i = 0}^{s-1} i \\
+    &= \frac{s+1}{2} 
+\end{align*}
+
+Hence, we have $\E[X_t-X_{t+1}| X_t =s] \geq \frac{s+1}{2}$, for all $0 <s \leq n$, with $h(s): s \mapsto \frac{s+1}{2}$ being monotonically increasing, we have verified all assumptions of the Variable Drift Theorem, hence, we can conclude the following:
+
+\begin{align*}
+    \E[T]
+    &\leq \frac{1}{h(1)} + \int_{{1}}^{{n}} {\frac{1}{h(x)} } \: d{x} \\
+    &= 1 + \int_{{1}}^{{n}} {\frac{2}{s+1}} \: d{x} \\
+    &= 1 + 2 \int_{{2}}^{{n+1}} {(\ln(x))'} \: d{x} \\
+    &= 1 + 2(\ln(n+1)-\ln(2)) \\
+    &\leq 2\ln(n+1) \quad \quad \quad ( 1 - 2\ln(2) \approx  -0.39 )
+\end{align*}
+
+Using the Additive Drift Theorem (since $\E[X_t-X_{t+1}| X_t =s] \geq 1$, for all $0 <s \leq n$) would lead to conclude that $\E[T] \leq n$, which is less tight than the gap that we obtained using the Variable Drift Theorem. \\
 
 \noindent
-\textbf{(b)} 
+\textbf{(b)} The function $h(s)\colon s \mapsto \frac{1}{s}$ isn't monotonically increasing, hence we can't use the Variable Drift Theorem. \\
+
+We have, for $0 <  s \leq n, \quad \E[X_t-X_{t+1}| X_t=s] \geq \frac{1}{n}$, hence, using the Additive Drift Theorem, yields the following: $\E[T] \leq n^2$ \\
 
 \noindent
-\textbf{(c)}  
+\textbf{(c)} Blabla
+
+\begin{align*}
+    \E[T]
+    &= \frac{1}{h(1)} + \int_{{1}}^{{n}} {x^{-\frac{1}{2} }} \: d{x} \\
+    &= 1 + \frac{1}{2} \int_{{1}}^{{n}} {\sqrt{x}} \: d{x} \\
+    &= \frac{1}{2} (\sqrt{n}+1)
+\end{align*}
 
 \noindent
 \textbf{(d)} Consider the random process $(X_t)_{t \geq 0}$ on state space $\{0, 1, \dots, n\}$, where knowing that $X_t = s$ for $s>0$, $X_{t+1}$ is defined as follows:
