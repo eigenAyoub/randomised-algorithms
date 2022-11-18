@@ -41,8 +41,8 @@ Winter term 2022/2023, Exercise Sheet No. 5}
 \noindent
 \textbf{(b)} We denote the probability that $S_1$ (resp $S_2$) is correct as $P_1$ (resp. $P_2$), we have: 
 \begin{align*}
-P_1 &= \P[\text{\{Output of L5 is correct\}}|\text{\{Contraction at L4 is correct\}}]\P[\text{\{Contraction at L4 is correct\}}] \\
-    &= P(n-1) q_n \\
+P_1 &= \P[\text{\{Contraction at L4 is correct\}}]\P[\text{\{Output of L5 is correct\}}|\text{\{Contraction at L4 is correct\}}] \\
+    &= q_n P(n-1) \\
 P_2 &= P(n)
 \end{align*}
 
@@ -68,7 +68,7 @@ The algorithm is succesful if either the return at line 7 was a succes (i.e., $S
 \end{align*}
 
 \noindent
-\textbf{(c)} By dividing the equation that we derived in the last question by $P(n)P(n-1)$, we get the following, for $k \in \{3, \dots, n\}$:
+\textbf{(c)} By dividing the equation that we derived in the last question by $P(k)P(k-1)$, we get the following, for $k \in \{3, \dots, n\}$:
 
 \begin{align*}
     \frac{1}{P(k-1)} - \frac{1}{P(k)}  &= - \frac{2}{k}  \\
@@ -101,7 +101,6 @@ We have the following:
     \E_{(X_t,X_{t+1})}[X_t - X_{t+1}| X_t=s]  
     &= \E_{X_{t+1}}[s- X_{t+1}| X_t=s]  \\
     &= s - \E[X_{t+1}| X_t=s]  \\
-    &= s - \sum_{X_{t+1}} \P[X_{t+1}|X_t=s]X_{t+1}
 \end{align*}
 
 If $s=n$ (we are at the bar), $X_{t+1}$ has two options $\{n, n-1\}$
@@ -188,7 +187,7 @@ Hence, we have $\E[X_t-X_{t+1}| X_t =s] \geq \frac{s+1}{2}$, for all $0 <s \leq 
 \begin{align*}
     \E[T]
     &\leq \frac{1}{h(1)} + \int_{{1}}^{{n}} {\frac{1}{h(x)} } \: d{x} \\
-    &= 1 + \int_{{1}}^{{n}} {\frac{2}{s+1}} \: d{x} \\
+    &= 1 + \int_{{1}}^{{n}} {\frac{2}{x+1}} \: d{x} \\
     &= 1 + 2 \int_{{2}}^{{n+1}} {(\ln(x))'} \: d{x} \\
     &= 1 + 2(\ln(n+1)-\ln(2)) \\
     &\leq 2\ln(n+1) \quad \quad \quad ( 1 - 2\ln(2) \approx  -0.39 )
@@ -202,13 +201,13 @@ Using the Additive Drift Theorem (since $\E[X_t-X_{t+1}| X_t =s] \geq 1$, for al
 We have, for $0 <  s \leq n, \quad \E[X_t-X_{t+1}| X_t=s] \geq \frac{1}{n}$, hence, using the Additive Drift Theorem, yields the following: $\E[T] \leq n^2$ \\
 
 \noindent
-\textbf{(c)} Blabla
+\textbf{(c)} We have, $h(s): s \mapsto \sqrt{s}$ is monotonically increasing for all $0 < s \leq n$, using the Variable Drift Theorem, we get:
 
 \begin{align*}
     \E[T]
-    &= \frac{1}{h(1)} + \int_{{1}}^{{n}} {x^{-\frac{1}{2} }} \: d{x} \\
-    &= 1 + \frac{1}{2} \int_{{1}}^{{n}} {\sqrt{x}} \: d{x} \\
-    &= \frac{1}{2} (\sqrt{n}+1)
+    &\leq \frac{1}{h(1)} + \int_{{1}}^{{n}} {x^{-\frac{1}{2} }} \: d{x} \\
+    &\leq 1 + 2 \int_{{1}}^{{n}} {(\sqrt{x})'} \: d{x} \\
+    &\leq 2 \sqrt{n} - 1 
 \end{align*}
 
 \noindent
