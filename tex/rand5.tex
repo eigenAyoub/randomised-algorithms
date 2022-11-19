@@ -46,7 +46,7 @@ P_1 &= \P[\text{\{Contraction at L4 is correct\}}]\P[\text{\{Output of L5 is cor
 P_2 &= P(n)
 \end{align*}
 
-The algorithm is succesful if either the return at line 7 was a succes (i.e., $S_1$ is a success) or  the return at line 10 was a succes, which yiled the following: 
+The algorithm is succesful if either the return at line 7 was a succes (i.e., $S_1$ is a success) or  the return at line 10 was a succes, which yields the following: 
 
 \begin{align*}
     p(n) &= \P[\text{\{Entered L7\}}]\P[\text{\{Succes\}}|\text{\{entered L7\}}]
@@ -122,7 +122,7 @@ If $0<s<n$, $X_{t+1}$ has two options $\{s-1, s+1\}$
 Hence, we get, for all $t>0, s \neq 0$:
 \[ \frac{1}{5} \leq \E[X_t-X_{t+1} | X_t = s]  \leq 1 \]
 
-Which yields the following bounds, assuming $X_0 = n$:
+Which yields the following bounds, using the additive drift theorem, and assuming $X_0 = n$:
 \[ n \leq \E[T] \leq 5n \]
 \end{exo}
 
@@ -138,7 +138,7 @@ We have for $s \neq 0$: $\E[X_{t+1}|X_t = s] = 0$, and hence:
 
 \[ \E[X_t - X_{t+1} | X_t =s] =  s - \E[X_{t+1}|X_t = s] = s \]
 
-Which yields, $\E[X_t - X_{t+1}| X_t = s] \leq 1$ for all $s \neq 0$. using the additive drift theorem would lead to conclude that $1 \leq E[T]$ \\
+Which yields, $\E[X_t - X_{t+1}| X_t = s] \leq 1$ for all $s \neq 0$ (with $\P[X_t =s]> 0$), using the additive drift theorem would lead to conclude that $1 \leq E[T]$ \\
 
 \textbf{To make it work}, we define the random process $(Y_t)$ as $Y_t = X_t +1$, clearly $Y_t \in \{0, 1, 2\}$, and 
 \begin{align*}
@@ -154,7 +154,7 @@ $[s \neq 0 \land \P(Y_t = s)> 0 \implies s=2]$, and hence we only need to verify
 \begin{align*}
     \E[Y_t - Y_{t+1}| Y_t  = 2] 
         &= 2 - \E[Y_{t+1}|Y_t = 2] 
-        \quad \quad \text{(($Y_{t+1}$ can only move to 0 or 2)}\\
+        \quad \quad \text{($Y_{t+1}$ can only move to 0 or 2)}\\
         &= 2 - 2\P[Y_{t+1}=2|Y_t = 2] \\
         &= 2 - 2 \frac{1}{2} \\ 
         &= 1
