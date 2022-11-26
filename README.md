@@ -5,6 +5,12 @@ This repo will mainly contain my attempts to solve the homeworks of the course *
 
 As we always get some feedback from the Professor, I'll try to add below points that I have missed, or questions that I got completely wrong:
 
+
+### Homework 5:
+**Mark: 20/20**
+
+I made a mistake that got me a point in Exercise 2, $E[X_t - X_{t+1} | X_t = s]$ is equal to 1/5 and not 1. And there was a bonus question of 2 points, I got half the prize :p.
+
 ### Homework 4:
 **Mark: 17/20**
 

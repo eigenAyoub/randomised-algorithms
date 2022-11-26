@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 5}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+
+\maketitle
+
+%exo1
+\begin{exo}{\ \\}
+
+Let $(X_t)_{t\geq0}$ be the stochastic process where $X_t$ is the number of remaining gifts at round $t$.
+
+\noindent
+At step $t$, we let $\{g_1, \dots, g_{X_t}\}$ be an arbitrary ordering of the remaing gifts, we define the RVs $(Y_i^{t})_{1\leq i\leq X_t}$ as follows: 
+
+\[   
+Y_i^{t} = 
+\begin{cases}
+    &1 \quad \quad \text{if the gift $g_i$ was picked by one and only one child in the next round $t+1$} \\
+    &0 \quad \quad \text{otherwise}
+\end{cases}
+\]
+
+Also, with $X_t = s$, we have, $\P[Y_i^t = 1] = \binom{s}{1} \frac{1}{s} (\frac{s-1}{s})^{s-1} = (\frac{s-1}{s})^{s-1}$   \\
+
+Most importantly, we have $X_{t+1} = X_t - \sum_{i=1}^{i=X_t} Y_i^{t} $, hence, we can write the following, for $s>0$:
+
+\begin{align*}
+    \E[X_t-X_{t+1}| X_t=s] 
+    &= \E[\sum_{i=1}^{i=X_t} Y_i^t| X_t = s] \\
+    &= \E[\sum_{i=1}^{i=s} Y_i^t| X_t = s] \\
+    &= \sum_{i=1}^{s} \E[Y_i^t] \\
+    &= \sum_{i=1}^{s} \P[Y_i^t = 1] \\
+    &= \sum_{i=1}^{s} (1 - \frac{1}{s})^{s-1} \\
+    &\geq \frac{s}{e} 
+\end{align*}
+
+With $h(s): s \mapsto \frac{s}{e}$ being monotonicaly increasing, and by applying the Variable Drift Theorem, we conclude the following:
+
+\begin{align*}
+    \E[T|X_0=n]
+    &\leq \frac{1}{h(1)} + \int_{{1}}^{{n}} {\frac{1}{h(x)} } \: d{x} \\
+    &= \frac{1}{e} + e \int_{{1}}^{{n}} {\frac{1}{s} } \: d{x} \\
+    &= \frac{1}{e} + e \ln(n) \\ 
+\end{align*}
+\end{exo}
+
+
+\end{document}
+
