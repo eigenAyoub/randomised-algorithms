@@ -68,9 +68,151 @@ With $h(s): s \mapsto \frac{s}{e}$ being monotonicaly increasing, and by applyin
 \begin{align*}
     \E[T|X_0=n]
     &\leq \frac{1}{h(1)} + \int_{{1}}^{{n}} {\frac{1}{h(x)} } \: d{x} \\
-    &= \frac{1}{e} + e \int_{{1}}^{{n}} {\frac{1}{s} } \: d{x} \\
-    &= \frac{1}{e} + e \ln(n) \\ 
+    &= e + e \int_{{1}}^{{n}} {\frac{1}{s} } \: d{x} \\
+    &= e(1 + \ln(n)) \\ 
 \end{align*}
+\end{exo}
+
+\begin{exo}{\ \\}
+
+We define the stochastic process $(X_t)_{t \geq 0}$ as: $X_t = 100 - Z_t$, where $Z_t$ represents the token's cell at time-step $t$. Let's first derive some preperties regarding the distribution of $X_t$.
+   
+
+We have for $s \in \{6, \dots, 100\}$, and $k \in \{1, \dots, 6\}$: $\P[X_{t+1}= s-k | X_t =s] = \frac{1}{6} $
+
+
+And for $s \in \{1, \dots ,5\}$, and $k \in \{0, \dots, s\}$
+
+\[
+\P[X_{t+1} = k| X_t = s] = 
+\begin{cases}
+    &\frac{1}{6}  \quad \quad \text{if } k < s \\
+    &\frac{6-s}{6}  \quad \quad \text{if } k = s \\
+\end{cases}
+\]
+
+Hence we have, for $5 < s\leq 100$:
+\begin{align*}
+    \E[X_{t+1}| X_t =s]
+    &= \sum^{s-1}_{i=s-6} i \P[X_{t+1}=i | X_t = s] \\
+    &= \sum^{s-1}_{i=s-6} i \frac{1}{6} \\
+    &= \frac{1}{6} \sum^{s-1}_{i = s-6} i \\
+    &= \frac{1}{6} (6s - 21) = s - \frac{7}{2}  \\
+    & \implies \\
+    \E[X_t - X_{t+1}| X_t = s] &= s - (s-\frac{7}{2}) \\
+    &= \frac{7}{2} 
+\end{align*}
+
+Hence we have, for $0 < s\leq 5$:
+\begin{align*}
+    \E[X_{t+1}| X_t =s]
+    &= \sum^{s}_{i=0} i \P[X_{t+1}=i | X_t = s] \\
+    &= \sum^{s-1}_{i=0} i \P[X_{t+1}=i | X_t = s] 
+    + s \P[X_{t+1}=s|X_t=s] \\
+    &= \sum^{s-1}_{i=0} i \frac{1}{6} + \frac{s(6-s)}{6} \\
+    &= \frac{s(s-1)}{12} + \frac{s(6-s)}{6}  \\
+    &= \frac{11s - s^2}{12} \\ 
+    & \implies \\
+    \E[X_t - X_{t+1}| X_t = s] &= s - (\frac{11s - s^2}{12}) \\
+    &= \frac{s^2 +s}{12} \\ 
+    & \implies \\
+    \frac{1^2 + 1}{12} \leq  \E[X_t - X_{t+1}| X_t = s] &\leq \frac{5^2 + 5}{12} \\ 
+    & \implies \\
+    \frac{1}{6} \leq  \E[X_t - X_{t+1}| X_t = s] &\leq \frac{5}{2} \\ 
+\end{align*}
+
+Hence, for all $0<s\leq 100$:
+
+\[ 
+    \frac{1}{6} \leq  \E[X_t - X_{t+1}| X_t = s] \leq \frac{7}{2}
+\]
+
+Using the Additive Drift Theorem, we conclude that:
+
+\[ \frac{100*2}{7}  \leq \E[T | X_0 = 100] \leq 100 * 6 \implies 
+\frac{200}{7} \leq \E[T|X_0 = 100] \leq 600 \]
+
+\end{exo}
+
+\begin{exo}{\ \\}
+
+\noindent
+\textbf{(a)} 
+Let $Y_i$ be the RV associated with the value of the i-th roll, we have: $X = \sum_{i=1}^{i=n} Y_i$, 
+
+Let's first compute $\E[Y_i]$ and $var[Y_i]$:
+
+\[ \E[Y_i] = \sum^{6}_{i=1} \frac{i}{6} = 7/2 \]
+
+And for the $var[Y_i]$, we have:
+\begin{align*}
+    \E[Y_i^2] 
+    &= \sum_{k=1}^{k=6} k^2.\P[Y_i=k] \\
+    &=\frac{1}{6}  \sum_{k=1}^{k=6} k^2 \\
+    &= \frac{91}{6}\\
+    &\implies \\
+    var[Y_i] &= \frac{91}{6} - (\frac{7}{2})^2 = \frac{35}{12} 
+\end{align*} 
+
+Now let's compute $\E[X]$:
+\begin{align*}
+    \E[X] 
+    &= \E[\sum_{i=1}^{i=n} Y_i]\\
+    &= \sum_{i=1}^{i=n} \E[ Y_i] \\
+    &= \frac{7n}{2}
+\end{align*} 
+
+Now let's compute $var(X)$, by noting that each roll $Y_i$ is independent, we get:
+
+\begin{align*}
+    var[X] 
+    &= var[\sum_{i=1}^{i=n} Y_i] \\
+    &= n . var[Y_1] \\
+    &= \frac{35n}{12} 
+\end{align*}
+
+\noindent
+\textbf{(b)} 
+
+Using Markov's inequality, we have:
+
+\begin{align*}
+    \P[X \geq 4n]  &\leq \frac{\E[X]}{4n}\\
+    \P[X \geq 4n]  &\leq \frac{\frac{7n}{2}}{4n}\\
+    \P[X \geq 4n]  &\leq \frac{7}{8}\\
+\end{align*} 
+
+\noindent
+\textbf{(c)} 
+
+We have:
+
+\begin{align*}
+    \P[X \geq 4n]
+    &= \P[X - \E[X] \geq 4n - \frac{7n}{2} ] \\
+    &= \P[X - \E[X] \geq \frac{n}{2}] \\
+    &\leq \P[|X-\E[X]| \geq \frac{n}{2} ] \quad \quad \text{[Line \#17]}\\
+    &\leq \frac{var[X]}{\frac{n^2}{2^2}} \quad \quad \text{(Using Chebychev)} \\
+    &= \frac{35}{3n} 
+\end{align*}
+
+\noindent
+\textbf{(d)} 
+From the past question,\textbf{[Line \#17]}, we get the following:
+\[ \P[|X-\E[X]| \geq \frac{n}{2} ] \leq \frac{35}{3n}   \]
+
+We also have:
+\begin{align*}
+    \P[X \leq 3n] 
+    &= \P[X - \E[X] \leq -\frac{n}{2}] \\
+    &\leq \P[|X-\E[X]| \geq \frac{n}{2}]  \\  
+\end{align*}
+
+And hence, we  conclude that:
+
+\[    \P[X \leq 3n] \leq  \frac{35}{3n}    \]
+
+
 \end{exo}
 
 
