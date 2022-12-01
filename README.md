@@ -5,6 +5,9 @@ This repo will mainly contain my attempts to solve the homeworks of the course *
 
 As we always get some feedback from the Professor, I'll try to add below points that I have missed, or questions that I got completely wrong:
 
+### Homework 6:
+**MArk: 19/20**
+
 
 ### Homework 5:
 **Mark: 20/20**

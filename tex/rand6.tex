@@ -21,7 +21,7 @@
 \def\E{\mathbb{E}}
 
 \title{Randomised Algorithms \\
-Winter term 2022/2023, Exercise Sheet No. 5}
+Winter term 2022/2023, Exercise Sheet No. 6}
 
 \author{
     \textbf{Authors:} \\
@@ -215,6 +215,57 @@ And hence, we  conclude that:
 
 \end{exo}
 
+
+\begin{exo}{\ \\}
+
+Suppose $|P|>4n^{\frac{3}{4}}+2$, and let $k_l = k - 2n^{\frac{3}{4}}$ 
+and $k_h = k + 2n^{\frac{3}{4}}$. As established in the notes, for error 2 to occur we must either have $a \geq S(k_l)$ or $b \leq S(k_h)$. Now, suppose $a > S(k_l)$, (other case follows the same logic).
+
+We define the indicator RV $X_i$ as follows: $X_i$ = 
+\begin{cases}
+    1 \quad \text{if the i-th drawn element is $\leq S(k_l)$}\\
+    0 \quad \quad otherwize
+\end{cases}
+
+\noindent 
+We have:
+
+$\E[X_i] 
+= \P[\{\text{The i-th drawn element is $\leq S(k_l)$}\}]
+= \frac{k_l}{n} 
+$.
+
+And: $var[X_i] = \E[X_i^2]- \E[X_i]^2 = \frac{k_l}{n}(1-\frac{k_l}{n}) \leq \frac{1}{4} $ (Using: $(\frac{k}{n}  - \frac{1}{2})^2 \geq 0$).
+
+Let $X = \sum^{^{\frac{3}{4}}}_{i=1} X_i $ be the number of sampled elements that are $\leq S(k_l)$. We have:
+
+\[ \E[X] = \E[\sum^{n^{3/4}}_{i=1} X_i] = n^{3/4} \E[X_1] = \frac{k_l}{n^{1/4}}  \]
+And 
+\[ 
+    var[X] 
+    = var[\sum^{n^{3/4}}_{i=1} X_i] 
+    = \sum^{n^{3/4}}_{i=1} var[X_i] 
+    \leq \frac{n^{3/4}}{4} 
+\]
+
+Now, we have the following:
+
+\begin{align*}
+    \P[S(k_l) < a] 
+    &= \P[X < l] \\
+    &= \P[X - \E[X] < l - \E[X]] \\
+    &= \P[X-\E[X] < \frac{k-k_l}{n^{1/4}} - \sqrt{n} ] \\
+    &= \P[X-\E[X] < \frac{2n^{3/4}}{n^{1/4}} - \sqrt{n} ] \\
+    &= \P[X-\E[X] < - \sqrt{n} ] \quad \quad \text{Line Error} \\
+    &\leq \P[|X-\E[X]| > \sqrt{n} ] \\
+    &\leq \frac{var[X]}{\sqrt{n}^2} \\
+    &\leq \frac{n^{3/4}}{4n}  
+    = \mathcal{O}(n^{\frac{-1}{4}})
+\end{align*}
+
+\textbf{Remark on Line Error:} That line is an error, should be $+\sqrt{n}$, only discovered it by deadline time, so I'm sorry, I'll just submit draft as it is now.} \\
+
+\end{exo}
 
 \end{document}
 
