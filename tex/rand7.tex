@@ -43,11 +43,43 @@ Winter term 2022/2023, Exercise Sheet No. 7}
 
 \end{exo}
 
-%exo1
+%exo3
 \begin{exo}{\ \\}
+
+Let $X_i$ be the RV associated with step $i$ of the algorithm and defined as follows:
+
+$X_i = 
+\begin{cases}
+    1 \quad \quad \text{if at step $i$, we picked $j$ such as $B[j] = null$ (in one try)} \\
+    0 \quad \quad \text{otherwise.} 
+\end{cases}
+$
+
+ We have $\P[X_i = 1] = \frac{n-i+1}{n}$ \\
+
+
+
+
+Now let $Y_i$ be the number of tries we need at each step $i$, to find a null element in $B$. Abviously, the running time $T$ could be expressed as follows: $T = \sum^{n}_{i=1} Y_i$, which yields, $\E[T] = \sum^{n}_{i=1} \E[Y_i]$ \\
+
+$Y_i$ is a geometric RV, with parameter $p = \P[X_i = 1]$, hence, $\E[Y_i] = \frac{n}{n-i+1} $, which yields:
+
+\begin{align*}
+    \E[T] 
+    &= \sum^{n}_{i=1} \frac{n}{n-i+1} \\
+    &= n(1+ \frac{1}{2} + \dots + \frac{1}{n} ) \\
+    &= n H_n \\
+    &= \Theta(n\log(n))
+\end{align*}
+
+
+
+
+
 
 \end{exo}
 
+%exo4
 \begin{exo}{\ \\}
 
 The case where $n=1$, is trivial, we will start our induction from $n=2$. \\
