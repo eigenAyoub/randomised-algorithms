@@ -40,22 +40,39 @@ Winter term 2022/2023, Exercise Sheet No. 7}
 We have for $t \geq 1$:  \quad \quad  $
 X_{t+1}  = 
 \begin{cases}
-    \frac{3}{2} X_t  \quad \quad &\text{with probability 18/37} \\
-    X_t/2  &\text{Otherwise}
+    X_t + [X_t/2]  \quad \quad &\text{with probability 18/37} \\
+    X_t - [X_t/2]  &\text{Otherwise}
 \end{cases}
 $
 
-Which yields:
+Technically speaking, we can never reach the state $0$, as the player gets stuck when $X_t = 1$. We'll define $Y_t = X_t - 1$. We have: $
+Y_{t+1}  = 
+\begin{cases}
+    Y_t + [\frac{Y_t+1}{2}]  \quad \quad &\text{with probability 18/37} \\
+    Y_t - [\frac{Y_t+1}{2}]  &\text{Otherwise}
+\end{cases}
+$
+
+Which yields, for $s \geq 1$:
 
 \begin{align*}
-    \E[X_t-X_{t+1}| X_t = s] 
-    &= s - \E[X_{t+1}|X_t = s] \\
-    &= s - (\frac{18}{37} \frac{3s}{2}  + \frac{19}{37}\frac{s}{2}) \\
-    &= \frac{s}{74} s
+    \E[Y_t-Y_{t+1}| Y_t = s] 
+    &= s - \E[Y_{t+1}|Y_t = s] \\
+    &= s - (\frac{18}{37}(s+[\frac{s+1}{2}])  
+    + \frac{19}{37}(s-[\frac{s+1}{2}])) \\
+    &= \frac{1}{37} [\frac{s+1}{2}] \\
 \end{align*}
+
+And hence: $\frac{s+1}{74} - \frac{1}{74}  < \E[Y_t - Y_{t+1}| Y_t = s] \leq \frac{s+1}{74}  \implies \frac{s}{74} < \E[Y_t - Y_{t+1}| Y_t = s] \leq \frac{s+1}{74} $ \\
+
+As $h: s \mapsto \frac{s}{74}$ is monotonically increasing, using the Variable Drift Theorem would lead us to:
+
+\[ \E[T | Y_0 = X_0 - 1 ] =    \]
 
 \noindent
 \textbf{(b)} 
+
+
 \end{exo}
 
 %exo1
