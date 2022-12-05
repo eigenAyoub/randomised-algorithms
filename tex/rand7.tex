@@ -35,9 +35,7 @@ Winter term 2022/2023, Exercise Sheet No. 7}
 
 \begin{exo}{\ \\}
 \noindent
-\textbf{(a)} 
-
-We have for $t \geq 1$:  \quad \quad  $
+\textbf{(a)} We have for $t \geq 1$:  \quad \quad  $
 X_{t+1}  = 
 \begin{cases}
     X_t + [X_t/2]  \quad \quad &\text{with probability 18/37} \\
@@ -63,14 +61,25 @@ Which yields, for $s \geq 1$:
     &= \frac{1}{37} [\frac{s+1}{2}] \\
 \end{align*}
 
-And hence: $\frac{s+1}{74} - \frac{1}{74}  < \E[Y_t - Y_{t+1}| Y_t = s] \leq \frac{s+1}{74}  \implies \frac{s}{74} < \E[Y_t - Y_{t+1}| Y_t = s] \leq \frac{s+1}{74} $ \\
+Hence, $\forall s \geq 1: \E[Y_t - Y_{t+1}| Y_t = 1] = \frac{1}{37} \leq \E[X_t - X_{t+1}| X_t = s]$. Using the Additive Drift Theorem, we get:
 
-As $h: s \mapsto \frac{s}{74}$ is monotonically increasing, using the Variable Drift Theorem would lead us to:
 
-\[ \E[T | Y_0 = X_0 - 1 ] =    \]
+\[ \E[T | Y_0] \leq 37 Y_0 \implies \E[T | X_0] \leq 37(X_0 -1)\]
 
 \noindent
-\textbf{(b)} 
+\textbf{(b)} We have, using the Multiplicative Drift Theorem with tail bounds, $\forall r \geq 0$:
+
+\[
+\P[T > [\frac{r+\ln(x_0)}{\delta}]| X_0 = x_0] \leq e^{-r}
+\]
+
+For $r = 2000\delta - \ln(x_0)$, we get $[\frac{r+\ln(x_0)}{\delta}] = 2000$, and hence:
+
+\[
+\P[T > 2000 | X_0 = 10^6] 
+\leq e^{-(2000 \frac{1}{37} + \ln(10^6)} 
+\leq e^{-40}
+\]
 
 
 \end{exo}
@@ -80,34 +89,61 @@ As $h: s \mapsto \frac{s}{74}$ is monotonically increasing, using the Variable D
 
 
 \noindent
-\textbf{(a)} The worst case is to have all pairs $\{a_i,a_j\}$ s.t: $i<j$ not ordered, in this case $INV(S_0) = \binom{n}{2} = \frac{n(n-1)}{2}$. We can achieve so, by taking a strictly ordered list, and inverse the order. \\
+\textbf{(a)} The worst case is to have all pairs $\{a_i,a_j\}$ s.t: $i<j$ not ordered, in this case $I(S_0) = \binom{n}{2} = \frac{n(n-1)}{2}$. We can achieve so, by taking a strictly ordered list, and inverse the order. \\
 
 \noindent
-\textbf{(b)} We let $S_t = [a_1, \dots, a_n]$ and $S_{t+1} = [b_1, \dots, b_n]$. We have, $b_i = a_j$ and $b_j = a_i$. We need to prove that:
+\textbf{(b)} We let $S_t = [a_1, \dots, a_n]$ and $S_{t+1} = [b_1, \dots, b_n]$. We have, $b_i = a_j$ and $b_j = a_i$. And let $I(S_t)$ be the set of pairs in the wrong ordering (similary for $I(S_{t+1})$). We need to prove that:
 
-\[ INV(S_{t+1}) \subsetneq  INV(S_{t}) \]
+\[ I(S_{t+1}) \subsetneq  I(S_{t}) \]
 
-For the strictness, obsiously, $\{a_i, a_j\} \in INV(S_t)$ but $\{a_i, a_j\} = \{b_j, b_i\} \notin INV(S_{t+1})$, now we need to prove the inclusion: \\
+For the strictness, obsiously, $\{a_i, a_j\} \in I(S_t)$ but $\{a_i, a_j\} = \{b_j, b_i\} \notin I(S_{t+1})$ (by definition of $S_{t+1}$), now we need to prove the inclusion: \\
 
-Let $\{b_k, b_l\} \in INV(S_{t+1})$ s.t: $k < l$: we have ofc $b_l < b_k$ \\
+Let $\{b_k, b_l\} \in I(S_{t+1})$ s.t: $k < l$: we have of course $b_l < b_k$. We distinguish 5 cases (and we ommit the trivial/extreme cases where k=1 or l=n):\\
 
-\textbf{if} $k \neq i$ and $l \neq j$, then $(b_k, b_l) = (a_k, a_l)$ and hence, $\{a_k, a_l\} \in INV(S_t)$. \\
+\textbf{If} $k \neq i$ and $l \neq j$:
 
-\textbf{If} $k=i$ and $l < j$:  \\
+\noindent
+Then $(b_k, b_l) = (a_k, a_l)$ and hence, $\{a_k, a_l\} \in I(S_t)$. \\
 
-\textbf{If} $k=i$ and $i <  j < l$:  \\
+\textbf{If} $k=i$ and $j < l$ \textbf{(Case-A)} :
 
-\textbf{If} $k < i$ and $j = l$: \\
-\textbf{If} $i<k<l$ and $j = l$: \\
+\noindent
+We have:  $
+a_l = b_l < b_k = b_i = a_j 
+\implies \{a_l, a_j\} \in I(S_{t}) 
+\implies \{b_l, b_i\} \in I(S_{t})
+$ \\
+
+\textbf{If} $k=i$ and $i <  l < j$ \textbf{(Case-B)}:
+
+\noindent We have:
+$
+a_l = b_l \quad \text{(as $l \neq i$ and $l \neq j$)}\\
+\& \quad b_l < b_k  \quad \text{(as $\{b_l, b_k\}\in I(S_{t+1})$)}\\  
+\& \quad b_k = b_i \quad \text{(We are in the case where $k = i$)}\\
+\& \quad b_i < b_j \quad \text{(By contsruction of $S_{t+1}$)}\\
+\& \quad b_j=  a_i \quad \text{(By construction of $S_{t+1}$)}\\ 
+$ 
+
+And hence: $a_l < a_i$, but $i<l$, which yields, $\{a_l, a_i\} \in I(S_{t})$ (we have $a_i = a_k$, so this case is complete). \\
+
+\textbf{If} $k < i$ and $j = l$: similar logic to \textbf{Case-A}. 
+
+\textbf{If} $i<k<l$ and $j = l$: similar logic to \textbf{Case-B}.  \\
+
+And hence, $I(S_{t+1}) \subset I(S_{t})$, we already proved that the inclusion is strict, given rise:
+
+\[
+    INV(S_{t+1}) < INV(S_{t}) \implies INV(S_{t+1}) \leq INV(S_t) - 1
+    \implies 1 \leq INV(S_t) - INV(S_{t+1})
+\]
 
 
+\noindent
+\textbf{(c)} 
 
 \end{exo}
 
-%exo1
-\begin{exo}{\ \\}
-
-\end{exo}
 
 %exo3
 \begin{exo}{\ \\}
@@ -151,16 +187,16 @@ $Y_i$ is a geometric RV, with parameter $p = \P[X_i = 1]$, hence, $\E[Y_i] = \fr
 The case where $n=1$, is trivial, we will start our induction from $n=2$. \\
 
 
-Let's say $A = [a_1, a_2]$, we have two permutations in total, $A_1 = A$ and $A_2 = [a_2, a_1]$. In this case, the main loop of the algorithm has two runs, but the second run (and generally when $i=n$) doesn't not change the outcome of the list. Hence, the list is only changed in the first step ($i = 1$). Which yields two possibilities with equal probability, we either pick $j=2$ (the algorithm swipes the two elements, and outputs, $A_2$), or we pick $j=1$, and nothing changes to the list, and the algorithm outputs $A_1$. \\
+Let's say $A = [a_1, a_2]$, we have two permutations in total, $A_1 = A$ and $A_2 = [a_2, a_1]$. In this case, the main loop of the algorithm has two runs, but the second run (and generally when $i=n$) doesn't not change the outcome of the list. Hence, the list is only changed in the first step ($i = 1$). Which yields two possibilities with equal probability, we either pick $j=2$ (the algorithm swipes the two elements, and outputs, $A_2$), or we pick $j=1$, and nothing changes to the list, and the algorithm outputs $A_1$. Hence, both $A_1$ and $A_2$ have equal probability 1/2 of being chosen by the algorithm. This proves the correctness in the case of $n=2$.\\
 
 
 Now, we suppose that the algorithm is correct for some $n \geq 2$, and prove that the algorithm is correct for an input of size $n+1$: \\
 
-Let, $T$ be a list of size $n+1$, and let $L =  [L_1,L']$ be a random permutation of $T$, where $L_1$ is the first element of $L$, and $L'$, is random permutaion of $T/\{L_1\}$ (i.e., the list $T$ minus the element $L_1$). We need to prove that $FastRandomPermutation(T)$, has a probability of $\frac{1}{(n+1)!}$ of outputing $L$.  \\
+Let $T$ be a list of size $n+1$, and let $L =  [L_1,L']$ be a random permutation of $T$, where $L_1$ is the first element of $L$, and $L'$, is random permutaion of $T/\{L_1\}$. We need to prove that $FastRandomPermutation(T)$, has a probability of $\frac{1}{(n+1)!}$ of outputing $L$.  \\
 
-For the first step, the algorithm picks at uniformely random an element of T, and swipes it with the first elemenet of $T$ ($T_1$), Hence, we have get a probability of $\frac{1}{n+1}$  of actually picking $L_1$. For the rest, we are left with a list of size $n$, $T/\{L_1\}$, and since $L'$ is a valid permutation of $T/\{L_1\}$, we get by induction, that the probability pof picking $L'$ in the steps $i \in \{2,\dots , n+1\}$ is $\frac{1}{n!}$. \\
+For the first step, the algorithm picks at uniformely random an element of T, and swipes it with the first elemenet of $T$ ($T_1$), Hence, we have get a probability of $\frac{1}{n+1}$  of actually picking $L_1$. For the rest, we are left with a list of size $n$, $T/\{L_1\}$, and since $L'$ is a valid permutation of $T/\{L_1\}$, we get by induction, that the probability of picking $L'$ in the steps $i \in \{2,\dots , n+1\}$ is $\frac{1}{n!}$. \\
 
-By the the multiplication theorem of probability, we conclude that the probability of picking $L$ as a permutaion is $\frac{1}{n+1} \frac{1}{n!} = \frac{1}{(n+1)!}$. This completes our proof by induction.
+By the the multiplication theorem of probability, we conclude that the probability of outputing $L$ by the algorithm is $\frac{1}{n+1} \frac{1}{n!} = \frac{1}{(n+1)!}$. This completes our proof by induction.
  
 \end{exo}
 
