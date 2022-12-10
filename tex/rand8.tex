@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\usepackage{algpseudocode}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 8}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)}  The algorithm described briefly as follows, has a \textbf{cubic} runtime.
+
+\begin{algorithmic}[1]
+\For{$1 \leq i \leq n, 1 \leq j \leq n$} 
+    \State $\alpha_{i,j} \gets sum([A_{i,k}B_{k,j} \text{ : } k \in \{1,\dots ,n\}])$ 
+    \State $\alpha_{i,j} \gets \alpha_{i,j} - c_{i,j}$
+\If{$\alpha_{i,j} \neq 0$}
+    \State \Return $0$
+\EndIf
+\EndFor 
+\State \Return $1$
+\end{algorithmic} \\
+
+\noindent
+\\\textbf{(b)}  Computing $x$, $y$, and $z$ requires $\mathcal{O}(n^2)$ each, and computing $t = y-z$ requires $\mathcal{O}(n)$, hence, the asymptotic runtime of this RA is $\mathcal{O}(n^2)$.\\
+
+\noindent
+\textbf{(c)} If $r \neq 0$, this event implies the following:
+\begin{itemize}
+    \item $r \in Ker(D)$
+    \item $r$ is orthogonal to all rows of $D$
+    \item Since $D \neq 0$, there exists at least one row $d_i \neq 0$ s.t: $d_i^\top r = 0$
+\end{itemize}
+
+We have:
+
+\begin{align*}
+    \P[\mathcal{E}] 
+    &= \P[Dr=0|r=0]\P[r=0] + \P[Dr=0|r\neq0]\P[r\neq0] \\
+    &= \frac{1}{3^n} + \P[Dr=0|r\neq0](1-\frac{1}{3^n}) \quad \quad  \text{\textbf{[1]}}
+\end{align*}
+
+
+For some $k\leq n$, we let, $d_1, \dots, d_k$  be the rows of $D$ that are not equal to $0$. We have:
+\begin{align*}
+    \P[Dr=0|r\neq0]
+    &= \P[d_1^\top r = 0, \dots, d_k^\top r = 0 |  r\neq0] \\
+    &\leq \P[d_1^\top r = 0 | r\neq0]    \quad \quad  \text{\textbf{[2]}}
+\end{align*}
+
+Let $d_{1,j}$ be the last element of $d_1$ not equal to $0$, we have: $d_1^\top r=0$ \textbf{if and only if} after $j-1$ picks of $r_1, \dots , r_{j-1}$, the $j^{th}$ pick (i.e., $r_j$) is chosen s.t:   $-d_{1,j} r_j = \sum^{j-1}_{i=1} d_{1,i} r_i $.
+
+And hence, knowing the values $r_1, \dots, r_{j-1}$, we conclude the following:
+
+
+\[
+\P[d_1^\top r = 0 | r\neq0]
+= \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i |r\neq0\right] \leq \frac{1}{3} 
+\]
+
+Using \textbf{[2]}, we get $\P[D r = 0 | r\neq0] \leq \frac{1}{3}$, anf from \textbf{[1]}, we conclude that:
+
+\[
+\P[\mathcal{E}] \leq \frac{1}{3^n} + \frac{1}{3}(1- \frac{1}{3^n} ) \leq \frac{1}{3} 
+\]
+
+\noindent
+\textbf{(d)} We can reduce the probability by amplification.
+
+\end{exo}
+
+
+
+\begin{exo}{\ \\}
+    
+    
+\end{exo}
+
+
+
+\end{document}
