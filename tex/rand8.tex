@@ -60,6 +60,7 @@ Winter term 2022/2023, Exercise Sheet No. 8}
     \item $r \in Ker(D)$
     \item $r$ is orthogonal to all rows of $D$
     \item Since $D \neq 0$, there exists at least one row $d_i \neq 0$ s.t: $d_i^\top r = 0$
+    \item $\sum^{n}_{i=1} r_i D_{.,i} = 0$
 \end{itemize}
 
 We have:
@@ -78,20 +79,41 @@ For some $k\leq n$, we let, $d_1, \dots, d_k$  be the rows of $D$ that are not e
     &\leq \P[d_1^\top r = 0 | r\neq0]    \quad \quad  \text{\textbf{[2]}}
 \end{align*}
 
-Let $d_{1,j}$ be the last element of $d_1$ not equal to $0$, we have: $d_1^\top r=0$ \textbf{if and only if} after $j-1$ picks of $r_1, \dots , r_{j-1}$, the $j^{th}$ pick (i.e., $r_j$) is chosen s.t:   $-d_{1,j} r_j = \sum^{j-1}_{i=1} d_{1,i} r_i $.
+Let $d_{1,j}$ be the last element of $d_1$ not equal to $0$, we have: $d_1^\top r=0$ \textbf{if and only if} after $j-1$ picks of $r_1, \dots , r_{j-1}$, the $j^{th}$ pick (i.e., $r_j$) is chosen s.t:   $-d_{1,j} r_j = \sum^{j-1}_{i=1} d_{1,i} r_i $. Which yields the following:
 
-And hence, knowing the values $r_1, \dots, r_{j-1}$, we conclude the following:
 
+\begin{align*}
+    \P[d_1^\top r = 0 | r\neq0]
+    &= \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i |r\neq0\right] \\
+    &= \frac{\P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i , r\neq0\right]}{\P[r\neq 0]} 
+    \quad \quad \text{(We refer to $r' = [r_1, r_2, \dots, r_{j-1}]$)}
+    \\ 
+    &= \frac{
+        \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i , r\neq0\right, r' \neq 0]
+            \P[r' \neq 0]+
+        \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i , r\neq0\right, r' = 0 ]
+            \P[r' = 0]
+    }
+    {\P[r\neq 0]} \\ 
+\end{align*}
+
+For the second term, we have: ($r' = 0 \implies r_j =0$) and ($r'\neq0$ and $r=0 \implies r_j \neq 0$), hence the second term is equal to $0$. 
+
+
+\begin{align*}
+    \P[d_1^\top r = 0 | r\neq0]
+    &\leq 
+        \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i , r\neq0, r' \neq 0\right]
+         \frac{\P[r' \neq 0]}{\P[r\neq 0]} \\
+    &\leq \frac{1}{3} \frac{\P[r' \neq 0]}{\P[r\neq 0]} \\
+    &= \frac{1}{3}  \frac{3^{n-1}-1}{3^{n-1}}  \frac{3^n}{3^n-1} \\
+    &= \frac{3^{n-1}-1}{3^n - 1} 
+\end{align*}
+
+Using \textbf{[2]}, we get $\P[D r = 0 | r\neq0] \leq  \frac{3^{n-1}-1}{3^n - 1}$, and from \textbf{[1]}, we conclude that:
 
 \[
-\P[d_1^\top r = 0 | r\neq0]
-= \P\left[r_j = \sum^{j-1}_{i=1} \frac{-d_{1,i}}{d_{1,j}} r_i |r\neq0\right] \leq \frac{1}{3} 
-\]
-
-Using \textbf{[2]}, we get $\P[D r = 0 | r\neq0] \leq \frac{1}{3}$, anf from \textbf{[1]}, we conclude that:
-
-\[
-\P[\mathcal{E}] \leq \frac{1}{3^n} + \frac{1}{3}(1- \frac{1}{3^n} ) \leq \frac{1}{3} 
+\P[\mathcal{E}] \leq \frac{1}{3^n} +  \frac{3^{n-1}-1}{3^n - 1}(1- \frac{1}{3^n} ) = \frac{1}{3} 
 \]
 
 \noindent
@@ -173,7 +195,7 @@ If $X$ can only take negative values, then:
 
 
 \noindent    
-\textbf{(b)} Let $\P[X\geq0] = p_X$, and $\P[Y\geq0] = p_Y$, we have: $p_X \leq p_Y$, we suppose that $0 < p_X < 1$ and $ 0 <  p_Y < 1$:
+\textbf{(b)} Let $\P[X > 0] = p_X$, and $\P[Y > 0] = p_Y$, we have: $p_X \leq p_Y$, we suppose that $0 < p_X < 1$ and $ 0 <  p_Y < 1$:
 
 \begin{align*}
     \E[Y]-\E[X] 
@@ -184,21 +206,16 @@ If $X$ can only take negative values, then:
     \quad \quad \text{\textbf{Eq. $\#42$}}
 \end{align*}
 
-We have:
-
-
-for $i \geq 1$:
+We have, for $i \geq 1$:
 
 \begin{align*}
     \P[X\geq i] \leq \P[Y \geq 1] 
     &\implies \sum_{k \geq 1} \P[X\geq k] \leq \sum_{k \geq 1} \P[Y \geq k]\\
-    &\implies \sum_{k \geq 1} \frac{\P[X\geq k]}{p_Y}
-    \leq \sum_{k \geq 1} \frac{\P[Y \geq k]}{p_Y}\\
     &\implies p_X \sum_{k \geq 1}  \frac{\P[X\geq k]}{p_X}
-    \leq  p_Y \sum_{k \geq 1} \frac{\P[Y \geq k]}{p_Y} 
-    \quad \quad \text{(as $p_X \leq p_Y$)}\\
+    \leq  p_Y \sum_{k \geq 1} \frac{\P[Y \geq k]}{p_Y} \\
     &\implies  p_X \E[X | X>0] \leq p_Y \E[Y | Y>0]
-    \quad \text{\textbf{[1]}} \quad \text{(using the result of the past question)}  \\
+    \quad \quad \text{(using the result of the past question)}  \\
+    &\implies p_Y \E[Y | Y>0] - p_X \E[X | X>0] \geq 0 \quad \quad  \text{\textbf{[1]}}
 \end{align*}
 
 On the other side, we have:
