@@ -48,13 +48,13 @@ Winter term 2022/2023, Exercise Sheet No. 8}
 \EndIf
 \EndFor 
 \State \Return $1$
-\end{algorithmic} \\
+\end{algorithmic}
 
 \noindent
 \\\textbf{(b)}  Computing $x$, $y$, and $z$ requires $\mathcal{O}(n^2)$ each, and computing $t = y-z$ requires $\mathcal{O}(n)$, hence, the asymptotic runtime of this RA is $\mathcal{O}(n^2)$.\\
 
 \noindent
-\textbf{(c)} If $r \neq 0$, this event implies the following:
+\textbf{(c)} If $r \neq 0$, the event $\mathcal{E}$ implies the following:
 \begin{itemize}
     \item $r \in Ker(D)$
     \item $r$ is orthogonal to all rows of $D$
@@ -101,8 +101,78 @@ Using \textbf{[2]}, we get $\P[D r = 0 | r\neq0] \leq \frac{1}{3}$, anf from \te
 
 
 \begin{exo}{\ \\}
-    
-    
+\noindent    
+\textbf{(a)} We have:
+
+\begin{align*}
+    \sum_{i\geq1} \P[X \geq i]
+    &= \sum_{i\geq1} \sum_{j = i }^{\infty} \P[X=j] \\
+    &= \sum_{j\geq1} \sum_{i=1}^{j} \P[X=j] \\
+    &= \sum_{j\geq1} \P[X=j]\sum_{i=1}^{j}1  \\
+    &= \sum_{j\geq1} j \P[X=j] = \E[X]\\
+\end{align*}
+
+If $X$ can only take negative values, then: 
+\begin{align*}
+    \E[X] 
+    &= -\E[-X] \\
+    &= -\sum_{j \geq 1} \P[-X \geq j] \\
+    &= -\sum_{j \geq 1} \P[X \leq -j]
+\end{align*}
+
+
+
+\noindent    
+\textbf{(b)} Let $\P[X\geq0] = p_X$, and $\P[Y\geq0] = p_Y$, we have: $p_X \leq p_Y$, we suppose that $0 < p_X < 1$ and $ 0 <  p_Y < 1$:
+
+\begin{align*}
+    \E[Y]-\E[X] 
+    &= p_Y \E[Y|Y>0] + (1-p_Y)\E[Y|Y<0] -
+    p_X \E[X|X>0] - (1-p_X)\E[X|X<0] \\
+    &= p_Y \E[Y|Y>0] - p_X \E[X|X>0] 
+    +(1-p_Y)\E[Y|Y<0] -  (1-p_X)\E[X|X<0] 
+    \quad \quad \text{\textbf{Eq. $\#42$}}
+\end{align*}
+
+We have:
+
+
+for $i \geq 1$:
+
+\begin{align*}
+    \P[X\geq i] \leq \P[Y \geq 1] 
+    &\implies \sum_{k \geq 1} \P[X\geq k] \leq \sum_{k \geq 1} \P[Y \geq k]\\
+    &\implies \sum_{k \geq 1} \frac{\P[X\geq k]}{p_Y}
+    \leq \sum_{k \geq 1} \frac{\P[Y \geq k]}{p_Y}\\
+    &\implies p_X \sum_{k \geq 1}  \frac{\P[X\geq k]}{p_X}
+    \leq  p_Y \sum_{k \geq 1} \frac{\P[Y \geq k]}{p_Y} 
+    \quad \quad \text{(as $p_X \leq p_Y$)}\\
+    &\implies  p_X \E[X | X>0] \leq p_Y \E[Y | Y>0]
+    \quad \text{\textbf{[1]}} \quad \text{(using the result of the past question)}  \\
+\end{align*}
+
+On the other side, we have:
+\[
+    \E[X|X<0] = -\sum_{i \geq 1} \frac{\P[X \leq -i]}{1-p_X} \implies 
+    (1-p_X) \E[X|X<0] = -\sum_{i \geq 1} \P[X \leq -i]
+\]
+
+Similarily:
+
+\[
+    (1-p_Y) \E[Y|Y<0] = -\sum_{i \geq 1} \P[Y \leq -i]
+\]
+
+Hence,
+
+\begin{align*}
+     (1-p_Y) \E[Y|Y<0] -  (1-p_X) \E[X|X<0]
+     &= \sum_{i \geq 1} \P[X \leq -i] - P[Y \leq -i] \\
+     &= \sum_{i \geq 1} \P[Y \geq i] - P[X \geq i] \\
+     &\geq 0   \quad \quad \text{\textbf{[2]} }
+\end{align*}
+
+By using the results in \textbf{[1]} and \textbf{[2]} in \textbf{Eq. $\#42$}, we conclude that $\E[X] \leq \E[Y]$.
 \end{exo}
 
 
