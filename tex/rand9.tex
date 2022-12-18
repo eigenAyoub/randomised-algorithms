@@ -114,50 +114,17 @@ We have:
     &= \P[|k\hat{p}-kp|>k\epsilon] \\
     &= \P\left[|A - \E[A]| > \E[A] \frac{k \epsilon}{\E[A]} \right] \\
     &= \P\left[|A - \E[A]| > \E[A] \frac{\epsilon}{p} \right] \\
+    &\leq 2 \exp{\left(-\E[A] \left(\frac{\epsilon}{p}\right)^2 \frac{1}{3}\right)}
+    \quad \text{(using Chernoff bounds)} \\
+    &= 2 \exp{\left(- k p   \left(\frac{\epsilon}{p}\right)^2 \frac{1}{3}\right)} \\
+    &= 2 \exp{\left(-\frac{\epsilon^2 k}{3p}\right)}
+    \leq  2 \exp{\left(-\frac{\epsilon^2 k}{3}\right)}
 \end{align*}
 
-We have proved in class the following for $0< \delta<1$:
-\[
-\P[X \geq (1+\delta)\E[X]] \leq \left( \frac{e^\delta}{(1+\delta)^{(1+\delta)}}\right)
-^{\E[X]}
-\quad \text{And} \quad
-\P[X \leq (1-\delta)\E[X]] \leq \left( \frac{e^{-\delta}}{(1-\delta)^{(1-\delta)}}\right)
-^{\E[X]}
-\]
-
-Using the inequality $\frac{2\delta}{2+\delta} \leq \log{(1+\delta)}$, we can easily upper bound the past inequalities that we haave proved in class to the following versions of Chernoff:
-
-\[
-\P[X \geq (1+\delta)\E[X]] 
-\leq 
-\exp(-\frac{\delta^2 \E[X]}{2+\delta})
-\quad \text{And} \quad
-\P[X \leq (1-\delta)\E[X]] 
-\leq 
-\exp(-\frac{\delta^2 \E[X]}{2})
-\]
-
-And hence:
-
-\[
-\P\left[|X-\E[X]| \geq \mu \E[X]\right] 
-\leq 2 \exp{(-\frac{\delta^2 \E[X]}{2+\delta})}
-\]
-
-Which yields:
-\begin{align*}
-    \P[|\hat{p}-p|>\epsilon]
-    &= \P\left[|A - \E[A]| > \E[A] \frac{\epsilon}{p} \right] \\
-    &\leq 2 \exp{\left(- \frac{(\epsilon/p)^2 \E[X]}{2 + (\epsilon/p)} \right)} \\
-    &\leq 2 \exp{\left(- \frac{\epsilon^2 k}{2p + \epsilon} \right)}
-\end{align*}
+For $k = 5000$ and $\epsilon = 0.05$, we get and upperbound of: $0.031$ \\
 
 
-%    &\leq 2 \exp{\left(-2\E[A] \left(\frac{\epsilon}{k}\right)^2 \frac{1}{3}\right)}
-%    \quad \text{(using Chernoff bounds)} \\
-%    &= 2 \exp{\left(-2 k p   \left(\frac{\epsilon}{k}\right)^2 \frac{1}{3}\right)} \\
-%    &= 2 \exp{\left(-\frac{2 \epsilon^2 p}{3k}\right)}
-%\end{align*}
+
 \end{exo}
 
 \begin{exo}{\ \\}
