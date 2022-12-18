@@ -1,0 +1,134 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tcolorbox}
+\usepackage{algpseudocode}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 9}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+\maketitle
+
+\begin{exo}{\ \\}
+    Let's first establish a few results on $d(u,v)$ for two random vertices of the hypercube. $d(u,v)$ represents the number of bits $v_i$ in $v$ that are diffrent than $u_i$, hence, $d(u,v) \in \{0, \dots, n\}$, and $\P[d(u,v) = k] = \frac{\binom{n}{k}}{2^n}$.(Why: How many ways can we pick k positions so we can flip their bits in $v$ divided by the number of all configurations.)
+
+    By noticing that $\sum^{n}_{i=1} k \binom{n}{k} = n 2^{n-1}$, we can conclude that:
+    \[
+\E[d(u,v)] = \sum^{n}_{i=1} k \frac{\binom{n}{k}}{2^n} = \frac{n}{2}
+    \]
+ 
+
+    Let's prove the following result, for any two random vertices $u,v \in V    $, $\epsilon > 0$:
+
+    \[
+        \P\left[(1-\epsilon)\frac{n}{2} \leq d(u,v) \leq (1+\epsilon)\frac{n}{2}\right]
+        \geq 1 - 2 e^{-\frac{n \epsilon^2 }{6}}  
+    \]
+
+\begin{tcolorbox}
+   \textbf{Proof:}  
+
+    Let's define the events $E_1$ and $E_2$ as follows:
+
+
+    \[
+        E_1 = \{ (1-\epsilon) \frac{n}{2} \leq d(u,v)\} 
+        = \{ (1-\epsilon) \E[d(u,v)] \leq d(u,v)\}
+    \]
+    And:
+
+    \[
+        E_2    = \{ (1+\epsilon) \frac{n}{2} \geq d(u,v)\} 
+        = \{(1+\epsilon) \E[d(u,v)] \geq d(u,v)\}    
+    \]
+
+We are looking for to bound the probablity: $\P[E_1 \cap E_2]$
+
+\begin{align*}
+    \P[E_1 \cap E_2] 
+    &= 1 - \P[\overline{E_1} \cup \overline{E_2}] \\
+    &\geq 1 - (\P[\overline{E_1}] +  \P[\overline{E_2}]) \\
+    &\geq  1 - 2 e^{-\E[d(u,v)]\epsilon^2 / 3} \\
+    &\geq  1 - 2 e^{-\frac{n \epsilon^2 }{6}} 
+\end{align*}
+
+Here we used the union bound followed by Chernoff 
+(Ineq 2. Slide 4 to bound $\P[\overline{E_2}]$, and Ineq 3 for $\P[\overline{E_1}]$), assumig $0 < \epsilon < 1$.
+\end{tcolorbox}
+
+
+Let $V = \{v_1, \dots, v_{2^n}\}$, \textbf{we uniformely random pick n vertices from V }.  Now, let's define the RVs $\{X_i\}$, $\{Y_{i,j}\}$ and $V(v_1, \dots, v_{2^n})$ as follows:
+
+\[
+X_i = 
+\begin{cases}
+    1 \quad \text{if $v_i$ was picked } \\
+    0 \quad \text{Otherwise.}
+\end{cases}
+Y_{i,j} = 
+\begin{cases}
+    1 \quad \text{if } \quad
+    (1-\epsilon)\frac{n}{2} \leq d(v_i, v_j) \leq (1+\epsilon)\frac{n}{2} \\
+    0 \quad \text{Otherwise.}
+\end{cases}
+\]
+And finally:
+\[
+S(v_1, \dots, v_{2^n}) = \sum_{i < j} X_i X_j Y_{i,j}
+\]
+
+We have:
+\begin{align*}
+    \E[S(v_1, \dots, v_{2^n})] 
+    &= \sum_{i < j} \E[X_i X_j Y_{i,j}] \\
+    &= \sum_{i < j} \E[X_i] \E[X_j] \E[Y_{i,j}] 
+    \quad \text{(every rv is independent from the other)}\\
+    &= \E[X_1]^2 \sum_{i < j} \E[Y_{i,j}] \\
+    &\geq \E[X_1]^2 (1 - 2 e^{-\frac{n \epsilon^2 }{6}})  \sum_{i < j} 1 \\ 
+    &= \P[\{\text{Probb. to pick $v_2$}\}]^2 (1 - 2 e^{-\frac{n \epsilon^2 }{6}})  
+    \frac{2^{2n} - 2^n}{2} \\ 
+    &= \left(\frac{n}{2^n}\right)^2 (1 - 2 e^{-\frac{n \epsilon^2 }{6}})  
+    \frac{2^{2n} - 2^n}{2}
+    = \frac{n^2}{2}  (1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} ) \\ 
+    &= \frac{n(n-1)}{2} \frac{n}{n-1}  (1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} ) \\ 
+    &= \frac{n(n-1)}{2} 
+    (1 + \frac{1}{n-1})(1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} ) \\ 
+\end{align*}
+
+\textbf{fix this:} 
+
+For $n$ big enough, 
+$(1 + \frac{1}{n-1})(1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} )$ is guarenteed to be $\geq 1$
+
+Hence, $\forall \epsilon > 0$, and  with $n$ big enough, $\E[S(v_1, \dots, v_{2^n})] \geq \frac{n(n-1)}{2}  $, hence there exist a configuration of $X, Y$ s.t $v() = \frac{n(n-1)}{2} $, which can only happen if all the n picks had Y_{i,j} =1
+
+
+\end{exo}
+
+\end{document}
+\maketitle
