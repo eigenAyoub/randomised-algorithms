@@ -69,8 +69,8 @@ Using the Chernoff bounds, (Ineq 2 then 3, from Slides 4), we conclude that (for
 Using the additive Chernoff (No extra requirements needed):
 \begin{align*}
 \P[X \geq n/2 +2\sqrt{n}]   
-&\leq e^{-2 \left(\frac{4}{\sqrt{n}}\right)^2 \frac{1}{n}}\\
-&= e^{-32/n^2}
+&\leq e^{-2 \left(2 \sqrt{n} \right)^2 \frac{1}{n}}\\
+&= e^{-8}
 \end{align*}
 
 \noindent
@@ -103,8 +103,61 @@ $n \geq n_0:
 \end{exo}
 
 \begin{exo}{\ \\}
+    Let $X_i$ be the indicator random variable telling whether the i-th queried person is voting for Alice or not, we have $A = \sum^{k}_{i=1}  X_i$. As $X_i$'s are drawn randomly with replacement, 
+    they are considered i.i.d realisations of the true distribution, i.e., $X_i \sim Bern(p) $.
+
+We also have: $\E[A] = kp$, hence, $\hat{p} = A/k$ is an unbiased estimate of $p$.
+
+We have:
+\begin{align*}
+    \P[|\hat{p}-p|>\epsilon]
+    &= \P[|k\hat{p}-kp|>k\epsilon] \\
+    &= \P\left[|A - \E[A]| > \E[A] \frac{k \epsilon}{\E[A]} \right] \\
+    &= \P\left[|A - \E[A]| > \E[A] \frac{\epsilon}{p} \right] \\
+\end{align*}
+
+We have proved in class the following for $0< \delta<1$:
+\[
+\P[X \geq (1+\delta)\E[X]] \leq \left( \frac{e^\delta}{(1+\delta)^{(1+\delta)}}\right)
+^{\E[X]}
+\quad \text{And} \quad
+\P[X \leq (1-\delta)\E[X]] \leq \left( \frac{e^{-\delta}}{(1-\delta)^{(1-\delta)}}\right)
+^{\E[X]}
+\]
+
+Using the inequality $\frac{2\delta}{2+\delta} \leq \log{(1+\delta)}$, we can easily upper bound the past inequalities that we haave proved in class to the following versions of Chernoff:
+
+\[
+\P[X \geq (1+\delta)\E[X]] 
+\leq 
+\exp(-\frac{\delta^2 \E[X]}{2+\delta})
+\quad \text{And} \quad
+\P[X \leq (1-\delta)\E[X]] 
+\leq 
+\exp(-\frac{\delta^2 \E[X]}{2})
+\]
+
+And hence:
+
+\[
+\P\left[|X-\E[X]| \geq \mu \E[X]\right] 
+\leq 2 \exp{(-\frac{\delta^2 \E[X]}{2+\delta})}
+\]
+
+Which yields:
+\begin{align*}
+    \P[|\hat{p}-p|>\epsilon]
+    &= \P\left[|A - \E[A]| > \E[A] \frac{\epsilon}{p} \right] \\
+    &\leq 2 \exp{\left(- \frac{(\epsilon/p)^2 \E[X]}{2 + (\epsilon/p)} \right)} \\
+    &\leq 2 \exp{\left(- \frac{\epsilon^2 k}{2p + \epsilon} \right)}
+\end{align*}
 
 
+%    &\leq 2 \exp{\left(-2\E[A] \left(\frac{\epsilon}{k}\right)^2 \frac{1}{3}\right)}
+%    \quad \text{(using Chernoff bounds)} \\
+%    &= 2 \exp{\left(-2 k p   \left(\frac{\epsilon}{k}\right)^2 \frac{1}{3}\right)} \\
+%    &= 2 \exp{\left(-\frac{2 \epsilon^2 p}{3k}\right)}
+%\end{align*}
 \end{exo}
 
 \begin{exo}{\ \\}
@@ -120,11 +173,12 @@ Using Hoeffding's inequality leads to:
     &= e^{-n/50} 
 \end{align*}
 
-This tail that obtained using Hoeffding's inequality decreases way faster than what we have obtained with Marokov and Chebychev's inequalities (respectively $\frac{7}{8}$ and $\frac{35}{3n}$).
+This tail that we obtained using Hoeffding's inequality decreases way faster than what we have obtained with Marokov and Chebychev's inequalities (respectively $\frac{7}{8}$ and $\frac{35}{3n}$).
 
 \end{exo}
 
 \begin{exo}{\ \\}
+
     Let's first establish a few results on $d(u,v)$ for two random vertices of the hypercube. $d(u,v)$ represents the number of bits $v_i$ in $v$ that are diffrent than $u_i$, hence, $d(u,v) \in \{0, \dots, n\}$, and $\P[d(u,v) = k] = \frac{\binom{n}{k}}{2^n}$.(Why: How many ways can we pick k positions so we can flip their bits in $v$ divided by the number of all configurations.)
 
     By noticing that $\sum^{n}_{i=1} k \binom{n}{k} = n 2^{n-1}$, we can conclude that:
