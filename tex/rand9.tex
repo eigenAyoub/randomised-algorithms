@@ -16,7 +16,7 @@
     \import{./figures/}{#1.pdf_tex}
 }
 
-
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
 
 \newtheorem{exo}{Exercise}
 \def\P{\mathbb{P}}
@@ -33,6 +33,96 @@ Winter term 2022/2023, Exercise Sheet No. 9}
 
 \begin{document}
 \maketitle
+
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)} As $\E[X] = \frac{n}{2}$, we have:
+
+\[\P[X \geq \frac{3}{4} n] 
+    =  \P[X \geq (1 + \frac{1}{2}) \frac{n}{2}] 
+    = \P[X \geq (1+\frac{1}{2}) \E[X])]\]
+And similarily:
+
+\[\P[X \leq \frac{1}{4} n] 
+    = \P[X \leq (1-\frac{1}{2}) \E[X])]\]
+
+Using the Chernoff bounds, (Ineq 2 then 3, from Slides 4), we conclude that (for $\delta = 1/2 <  1$):
+
+\[
+\P[X \leq \frac{1}{4} n] \leq e^{-\frac{n}{24}}
+\quad \text{ and }  \quad
+\P[X \geq \frac{3}{4} n] \leq  e^{-\frac{n}{24}}
+\]
+
+\noindent
+\textbf{(b)} Using the the simplified Chernoff bounds:
+
+\begin{align*}
+\P[X \geq n/2 +2\sqrt{n}]   
+&= \P[X \geq \frac{n}{2}(1 + \frac{4}{\sqrt{n}})] \\
+&\leq e^{ - \frac{n}{2} \left( \frac{4}{\sqrt{n}} \right)^2 \frac{1}{3}} 
+\quad \text{(Requires $\frac{4}{\sqrt{n}} < 1 \implies n > 16$)}
+\\
+&= e^{-8/3}
+\end{align*}
+
+Using the additive Chernoff (No extra requirements needed):
+\begin{align*}
+\P[X \geq n/2 +2\sqrt{n}]   
+&\leq e^{-2 \left(\frac{4}{\sqrt{n}}\right)^2 \frac{1}{n}}\\
+&= e^{-32/n^2}
+\end{align*}
+
+\noindent
+\textbf{(c)} We let $n_1 = \floor{n/2 - \sqrt{n}/4}$ and $n_2 = \floor{n/2 + \sqrt{n}/4}$, we have:
+
+\begin{align*}
+    \P[X \in [n/2 - \sqrt{n}/4, n/2 + \sqrt{n}/4]]
+    &\leq \P[X \in [n_1, n_2]] \\
+    &= \sum^{n_2}_{k=n_1} \P[X = k] \\
+    &= \sum^{n_2}_{k = n_1} \binom{n}{k} \frac{1}{2^n} \\
+    &\leq \frac{1}{2^n} \sum^{n_2}_{k = n_1} 2^n \frac{\sqrt{2}}{\sqrt{n}}  
+    \quad \text{(Using the hint)}
+    \\
+    &= \frac{\sqrt{2}}{\sqrt{n}} \sum^{n_2}_{k=n_1} 1  
+    = \frac{\sqrt{2}}{\sqrt{n}} (n_2 - n_2 +1) \\
+    &\leq \frac{\sqrt{2}}{\sqrt{n}}  
+    \left(n/2 + \sqrt{n}/4 - (n/2 - \sqrt{n}/4 - 1)\right) 
+    \text{ (using: $\floor{x}-\floor{y} \leq x-(y-1)$)}
+    \\
+    &= \frac{\sqrt{2}}{\sqrt{n}} (1 + \sqrt{n}/2)\\
+    &= \frac{\sqrt{2}}{\sqrt{n}}  + \frac{1}{\sqrt{2}} 
+\end{align*}
+
+For $n_0  = 24$, we have for 
+$n \geq n_0: 
+\frac{\sqrt{2}}{\sqrt{n}} + \frac{1}{\sqrt{2}} 
+\leq \frac{\sqrt{2}}{\sqrt{24}} + \frac{1}{\sqrt{2}} 
+\approx 0.995 $
+
+\end{exo}
+
+\begin{exo}{\ \\}
+
+
+\end{exo}
+
+\begin{exo}{\ \\}
+Let the RV $X$ represent the sum of the $n$ rolls, we have established previously that: $\E[X] = \frac{7n}{2}$
+
+
+Using Hoeffding's inequality leads to:
+
+\begin{align*}
+    \P[X \geq 4n] 
+    &= \P[X \geq E[X]+ \frac{n}{2} ] \\
+    &\leq \exp{\left(-\frac{2 (n/2)^2}{\sum^{n}_{i=1} (6-1)^2}\right)} \\
+    &= e^{-n/50} 
+\end{align*}
+
+This tail that obtained using Hoeffding's inequality decreases way faster than what we have obtained with Marokov and Chebychev's inequalities (respectively $\frac{7}{8}$ and $\frac{35}{3n}$).
+
+\end{exo}
 
 \begin{exo}{\ \\}
     Let's first establish a few results on $d(u,v)$ for two random vertices of the hypercube. $d(u,v)$ represents the number of bits $v_i$ in $v$ that are diffrent than $u_i$, hence, $d(u,v) \in \{0, \dots, n\}$, and $\P[d(u,v) = k] = \frac{\binom{n}{k}}{2^n}$.(Why: How many ways can we pick k positions so we can flip their bits in $v$ divided by the number of all configurations.)
@@ -101,7 +191,10 @@ And finally:
 \[
 S(v_1, \dots, v_{2^n}) = \sum_{i < j} X_i X_j Y_{i,j}
 \]
+We need to proof that:
 
+\begin{tcolorbox}    
+\textbf{Proof:} 
 We have:
 \begin{align*}
     \E[S(v_1, \dots, v_{2^n})] 
@@ -125,9 +218,8 @@ We have:
 For $n$ big enough, 
 $(1 + \frac{1}{n-1})(1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} )$ is guarenteed to be $\geq 1$
 
-Hence, $\forall \epsilon > 0$, and  with $n$ big enough, $\E[S(v_1, \dots, v_{2^n})] \geq \frac{n(n-1)}{2}  $, hence there exist a configuration of $X, Y$ s.t $v() = \frac{n(n-1)}{2} $, which can only happen if all the n picks had Y_{i,j} =1
-
-
+Hence, $\forall \epsilon > 0$, and  with $n$ big enough, $\E[S(v_1, \dots, v_{2^n})] \geq \frac{n(n-1)}{2}  $, hence there exist a configuration of $X, Y$ s.t $v() = \frac{n(n-1)}{2} $, which can only happen if all the n picks had $Y_{i,j} =1$
+\end{tcolorbox}
 \end{exo}
 
 \end{document}
