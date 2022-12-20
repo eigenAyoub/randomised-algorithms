@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tcolorbox}
+\usepackage{algpseudocode}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+\usepackage{tikz}
+\usetikzlibrary{shapes ,arrows ,positioning}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+
+\newtheorem{exo}{Exercise}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+
+\title{Randomised Algorithms \\
+Winter term 2022/2023, Exercise Sheet No. 9}
+
+\author{
+    \textbf{Authors:} \\
+    Ben Ayad, Mohamed Ayoub \\
+    Kamzon, Noureddine
+}
+
+\begin{document}
+\maketitle
+
+
+\begin{exo}{\ \\}
+
+\noindent
+\textbf{(a)} Let's say w.l.o.g  that $a^\star$ satifies the first literal (and only the first) of every clause, then $\neg{a}$ would satify the second literal of each clause, and hence, $\neg{a}$  would also be a satisfied assigment.
+
+
+    
+\end{exo}
+
+
+\begin{exo}{\ \\}
+\noindent
+\textbf{(a)} The figure below represents the Markov Chain of interest:  
+    
+\begin {figure}[h]
+    \centering 
+    \begin{tikzpicture}[ ->  , shorten>=2pt , line width =0.5pt , node distance =2cm]
+        \node [circle , draw ] (zero) {$\emptyset$};
+        \node [circle , draw ] (one) [ right of = zero ] {$T_1$};
+        \node [circle , draw ] (two) [ right of = one ] {$T_2$};
+        \node [circle , draw ] (three) [ right of = two ] {$H_1$};
+        \node [circle , draw ] (foor) [ right of = three ] {$T_3$};
+        \path (zero) edge [loop left]  node {$.5$} (zero) ;
+        \path (zero) edge [bend left] node [above] {$.5$} (one) ;
+        \path (one)  edge [bend left] node [above] {$.5$} (zero) ;
+        \path (one) edge [bend left] node [above]{$.5$} (two) ;
+        \path (two) edge node [ above ]{$.5$} (three) ;
+        \path (two) edge [ bend left ] node [below]{$.5$} (one) ;
+        \path (three) edge [ bend left] node [below]{$.5$} (zero) ; 
+        \path (three) edge [below] node {$.5$} (foor) ; 
+        \path (foor) edge [loop right] node {$0.5$} (foor) ;
+    \end{tikzpicture}
+\end{figure}
+
+
+
+\noindent
+\textbf{(b)} 
+
+\end{exo}
+
+
+\end{document}

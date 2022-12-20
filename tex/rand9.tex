@@ -218,7 +218,7 @@ We need to proof that:
 \textbf{Proof:} 
 We have:
 \begin{align*}
-    \E[S(v_1, \dots, v_{2^n})] 
+    \E[S(\{X_i\}_i, \{Y_{i,j}\}_{i,j})] 
     &= \sum_{i < j} \E[X_i X_j Y_{i,j}] \\
     &= \sum_{i < j} \E[X_i] \E[X_j] \E[Y_{i,j}] 
     \quad \text{(every rv is independent from the other)}\\
@@ -234,12 +234,10 @@ We have:
     (1 + \frac{1}{n-1})(1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} ) \\ 
 \end{align*}
 
-\textbf{fix this:} 
-
 For $n$ big enough, 
 $(1 + \frac{1}{n-1})(1 - 2 e^{-\frac{n \epsilon^2 }{6}})(1 - \frac{1}{2^n} )$ is guarenteed to be $\geq 1$
 
-Hence, $\forall \epsilon > 0$, and  with $n$ big enough, $\E[S(v_1, \dots, v_{2^n})] \geq \frac{n(n-1)}{2}  $, hence there exist a configuration of $X, Y$ s.t $v() = \frac{n(n-1)}{2} $, which can only happen if all the n picks had $Y_{i,j} =1$
+Hence, $\forall \epsilon > 0$, and  with $n$ big enough, $\E[S(\{X_i\}_i, \{Y_{i,j}\}_{i,j})] \geq \frac{n(n-1)}{2} $, hence there exist a configuration of ($\{X_i\}_i, \{Y_{i,j}\}_{i,j}$) s.t $S(\{X_i\}_i, \{Y_{i,j}\}_{i,j})  = \frac{n(n-1)}{2} $, which can only happen if all the n vertices that were picked had $Y_{i,j} =1$ for $v_i \neq v_j$.
 \end{tcolorbox}
 \end{exo}
 

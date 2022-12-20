@@ -5,6 +5,10 @@ This repo will mainly contain my attempts to solve the homeworks of the course *
 
 As we always get some feedback from the Professor, I'll try to add below points that I have missed, or questions that I got completely wrong:
 
+### Homework 9:
+**Mark: 21/20**
+(There was a bonus a question of 2 points)
+
 ### Homework 8:
 **Mark: 16.5/20**
 
