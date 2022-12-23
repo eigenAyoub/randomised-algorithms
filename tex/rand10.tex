@@ -44,7 +44,50 @@ Winter term 2022/2023, Exercise Sheet No. 9}
 
     
 \end{exo}
+\begin{exo}{\ \\}
+\noindent 
+\textbf{(a)} The new recurrence relations could be summed up as follows:
+\[
+\begin{cases}
+    E_0 
+    &= 0 \\
+    E_i 
+    &= 1 + \frac{1}{2} (E_{i+1}+E_{i-1})
+    \quad \text{for: $i \in \{1, \dots, n-1\}$ }
+    \\
+    E_n 
+    &= 1 + \frac{1}{2} (E_{n}+E_{n-1})\\
+\end{cases}
+\]
+The last implies that: $E_n = 2 +E_{n-1} \implies D_n = 2$.\\   
+The second line implies that:
+\[
+D_k = 2 + D_{k-1} \text{ for } k \in \{1, \dots, n-1\}
+\]
 
+By summing each equation from $k=1$ up to $k = i \leq n-1$, we get:
+\[
+D_1 = 2k + D_{k+1}
+\]
+
+Particularly when $k=n-1$
+\[
+D_1 = 2(n-1) + D_{n} = 2n = E_1
+\]
+
+And hence, $D_{k+1} = 2(n-k)$, for $k \in \{1, \dots, n-1\}$
+   
+\noindent 
+\textbf{(b)} For $k \in \{1, \dots, n\}$, we have:
+\begin{align*}
+E_k 
+&= \sum^{k}_{i=1} D_i  \\   
+&= \sum^{k}_{i=1} 2(n-(k-1)) \\
+&= k (2n -k) + k
+\end{align*}
+
+
+\end{exo}
 
 \begin{exo}{\ \\}
 \noindent
