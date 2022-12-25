@@ -39,7 +39,16 @@ Winter term 2022/2023, Exercise Sheet No. 9}
 \begin{exo}{\ \\}
 
 \noindent
-\textbf{(a)} Let's say w.l.o.g  that $a^\star$ satifies the first literal (and only the first) of every clause, then $\neg{a}$ would satify the second literal of each clause, and hence, $\neg{a}$  would also be a satisfied assigment.
+\textbf{(a)} Let's say w.l.o.g  that $a^\star$ satifies the first literal (and only the first) of every clause, then $\neg{a^\star}$ would satify the second literal of each clause, and hence, $\neg{a^\star}$  would also be a satisfied assigment. \\
+
+\noindent
+\textbf{(b)} We now have two competing "$a^\star$", and most importantly, the Hamming distance is complementary, i.e.,
+
+\[
+    H(a, a^\star) = n - H(a, \neg{a^\star})
+\]
+
+
 
 
     
@@ -53,7 +62,7 @@ Winter term 2022/2023, Exercise Sheet No. 9}
     &= 0 \\
     E_i 
     &= 1 + \frac{1}{2} (E_{i+1}+E_{i-1})
-    \quad \text{for: $i \in \{1, \dots, n-1\}$ }
+    \quad \text{for $i \in \{1, \dots, n-1\}$ }
     \\
     E_n 
     &= 1 + \frac{1}{2} (E_{n}+E_{n-1})\\
@@ -67,15 +76,17 @@ D_k = 2 + D_{k-1} \text{ for } k \in \{1, \dots, n-1\}
 
 By summing each equation from $k=1$ up to $k = i \leq n-1$, we get:
 \[
-D_1 = 2k + D_{k+1}
+D_1 = 2i + D_{i+1}\quad \text{ for } \quad i \in \{1, \dots, n-1\}
 \]
 
-Particularly when $k=n-1$
+Particularly when $i=n-1$
 \[
 D_1 = 2(n-1) + D_{n} = 2n = E_1
 \]
 
-And hence, $D_{k+1} = 2(n-k)$, for $k \in \{1, \dots, n-1\}$
+And hence, \[
+D_{i+1} = 2(n-i), \quad \text{ for } i \in \{1, \dots, n-1\}
+\]
    
 \noindent 
 \textbf{(b)} For $k \in \{1, \dots, n\}$, we have:
@@ -89,6 +100,10 @@ E_k
 
 \end{exo}
 
+
+
+
+\newpage
 \begin{exo}{\ \\}
 \noindent
 \textbf{(a)} The figure below represents the Markov Chain of interest:  
@@ -99,8 +114,8 @@ E_k
         \node [circle , draw ] (zero) {$\emptyset$};
         \node [circle , draw ] (one) [ right of = zero ] {$T_1$};
         \node [circle , draw ] (two) [ right of = one ] {$T_2$};
-        \node [circle , draw ] (three) [ right of = two ] {$H_1$};
-        \node [circle , draw ] (foor) [ right of = three ] {$T_3$};
+        \node [circle , draw ] (three) [ right of = two ] {$H_3$};
+        \node [circle , draw ] (four) [ right of = three ] {$T_4$};
         \path (zero) edge [loop left]  node {$.5$} (zero) ;
         \path (zero) edge [bend left] node [above] {$.5$} (one) ;
         \path (one)  edge [bend left] node [above] {$.5$} (zero) ;
@@ -108,15 +123,59 @@ E_k
         \path (two) edge node [ above ]{$.5$} (three) ;
         \path (two) edge [ bend left ] node [below]{$.5$} (one) ;
         \path (three) edge [ bend left] node [below]{$.5$} (zero) ; 
-        \path (three) edge [below] node {$.5$} (foor) ; 
-        \path (foor) edge [loop right] node {$0.5$} (foor) ;
+        \path (three) edge [below] node {$.5$} (four) ; 
+        \path (four) edge [loop right] node {$1$} (four) ;
     \end{tikzpicture}
 \end{figure}
 
 
+\noindent
+\textbf{(b)}  We refer to $E_0$ as the expected running time starting the the state $\emptyset$,($E_0 \rightarrow \emptyset$) and respectively:  $E_1 \rightarrow T_1, E_2 \rightarrow T_2, E_3 \rightarrow T_3, E_4 \rightarrow T_4$. \\
+
+ 
+
+We have the following system:\\
+
+
+$
+\begin{cases}
+    E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
+    E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
+    E_2 &= 1 +  \frac{1}{2} \left( E_1 + E_3 \right) \\
+    E_3 &= 1 +  \frac{1}{2} \left( E_0 + E_4 \right) \\
+    E_4 &= 0
+\end{cases} 
+\implies 
+\begin{cases}
+    E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
+    E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
+    E_2 &= 1 +  \frac{1}{2} \left( E_1 + E_3 \right) \\
+    E_3 &= 1 +  \frac{1}{2} \left( E_0 + E_4 \right) \\
+    E_4 &= 0
+\end{cases}
+\implies
+\begin{cases}
+    E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
+    E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
+    E_2 &= 1 +  \frac{1}{2} \left( E_1 + E_3 \right) \\
+    E_3 &= 1 +  \frac{1}{2} \left( E_0 + E_4 \right) \\
+    E_4 &= 0
+\end{cases}
+$ 
+
+solve this lol \\
+
 
 \noindent
-\textbf{(b)} 
+\textbf{(c)} Let's say this output has emerged: $T[TTH_1T]HTH_2$, the approach in \textbf{(a)} would detect the pattern between brackets, while the approach proposed in \textbf{(c)} would fail, as it would only check if the pattern has emerged looking back from $H_1$ and $H_2$. 
+
+The expected running time is the Expectation of a geometric RV of  $p = \frac{1}{2^4}$, which is equal to $\frac{1}{p}= 2^4 = 16 $, hence we wold need 16 trials, as each trial requires $4$ runs, we would need in expectation $16*4 = 64$ runs.
+
+
+
+
+
+
 
 \end{exo}
 
