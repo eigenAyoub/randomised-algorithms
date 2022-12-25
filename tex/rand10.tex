@@ -42,13 +42,19 @@ Winter term 2022/2023, Exercise Sheet No. 9}
 \textbf{(a)} Let's say w.l.o.g  that $a^\star$ satifies the first literal (and only the first) of every clause, then $\neg{a^\star}$ would satify the second literal of each clause, and hence, $\neg{a^\star}$  would also be a satisfied assigment. \\
 
 \noindent
-\textbf{(b)} We now have two competing "$a^\star$", and most importantly, the Hamming distance is complementary, i.e.,
+\textbf{(b)} We now have two competing targets $a^\star$ and $\neg{a^\star}$, and most importantly, their respective Hamming distance is complementary, i.e.,
 
 \[
     H(a, a^\star) = n - H(a, \neg{a^\star})
 \]
 
+Hence, when analyzing the algorithm, we will focus now on how each iteration of the algo changes the following measure:
 
+\[
+    \alpha = \min{(H(a, a^\star), H(a, \neg{a^\star}))}
+\]
+
+Since, $\alpha$ is at most $\floor{\frac{n}{2}}$, the "diameter" of the original Markov Chains is cut by half. In the case where $n$ is even, we get a fair Random Walk, and hence, we need at most $n^2/4$ steps.
 
 
     
@@ -137,7 +143,7 @@ E_k
 We have the following system:\\
 
 
-$
+\[
 \begin{cases}
     E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
     E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
@@ -147,29 +153,20 @@ $
 \end{cases} 
 \implies 
 \begin{cases}
-    E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
-    E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
-    E_2 &= 1 +  \frac{1}{2} \left( E_1 + E_3 \right) \\
-    E_3 &= 1 +  \frac{1}{2} \left( E_0 + E_4 \right) \\
+    E_0 &= 20 \\
+    E_1 &= 18 \\
+    E_2 &= 14 \\
+    E_3 &= 9 \\
     E_4 &= 0
 \end{cases}
-\implies
-\begin{cases}
-    E_0 &= 1 + \frac{1}{2} \left( E_0 + E_1 \right) \\
-    E_1 &= 1 +  \frac{1}{2} \left( E_0 + E_2 \right) \\
-    E_2 &= 1 +  \frac{1}{2} \left( E_1 + E_3 \right) \\
-    E_3 &= 1 +  \frac{1}{2} \left( E_0 + E_4 \right) \\
-    E_4 &= 0
-\end{cases}
-$ 
+\] 
 
-solve this lol \\
-
+We get 12 Steps in expectation. \\ 
 
 \noindent
 \textbf{(c)} Let's say this output has emerged: $T[TTH_1T]HTH_2$, the approach in \textbf{(a)} would detect the pattern between brackets, while the approach proposed in \textbf{(c)} would fail, as it would only check if the pattern has emerged looking back from $H_1$ and $H_2$. 
 
-The expected running time is the Expectation of a geometric RV of  $p = \frac{1}{2^4}$, which is equal to $\frac{1}{p}= 2^4 = 16 $, hence we wold need 16 trials, as each trial requires $4$ runs, we would need in expectation $16*4 = 64$ runs.
+The expected running time is the Expectation of a geometric RV of  $p = \frac{1}{2^4}$, which is equal to $\frac{1}{p}= 2^4 = 16 $, hence we would need 16 trials. As each trial requires $4$ steps, we would need in expectation $16*4 = 64$ steps.
 
 
 
